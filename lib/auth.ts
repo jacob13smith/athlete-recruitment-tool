@@ -5,12 +5,16 @@ import { verifyPassword } from "./utils"
 import { z } from "zod"
 
 // Validate required environment variables
-if (!process.env.NEXTAUTH_SECRET && !process.env.AUTH_SECRET) {
-  console.error('NEXTAUTH_SECRET or AUTH_SECRET must be set')
+const authSecret = process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET
+if (!authSecret) {
+  throw new Error(
+    'NEXTAUTH_SECRET or AUTH_SECRET must be set. ' +
+    'Please add it to your Vercel environment variables.'
+  )
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
+  secret: authSecret,
   providers: [
     Credentials({
       credentials: {
