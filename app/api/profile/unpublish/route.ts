@@ -47,8 +47,9 @@ export async function POST() {
     })
   } catch (error) {
     console.error("Error unpublishing profile:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to unpublish profile" },
+      { error: "Failed to unpublish profile", details: errorMessage },
       { status: 500 }
     )
   }

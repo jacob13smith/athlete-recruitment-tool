@@ -60,16 +60,22 @@ export async function GET() {
       "firstName",
       "lastName",
       "email",
+      "phone",
       "graduationYear",
       "highSchool",
       "club",
+      "otherTeams",
       "residence",
       "height",
       "primaryPosition",
       "secondaryPosition",
-      "gpa",
+      "dominantHand",
       "standingTouch",
       "spikeTouch",
+      "blockTouch",
+      "gpa",
+      "areaOfStudy",
+      "careerGoals",
     ] as const
 
     const profileChanged = profileFields.some((field) => {
@@ -114,8 +120,9 @@ export async function GET() {
     })
   } catch (error) {
     console.error("Error checking profile status:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to check profile status" },
+      { error: "Failed to check profile status", details: errorMessage },
       { status: 500 }
     )
   }

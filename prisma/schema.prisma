@@ -41,16 +41,22 @@ model Profile {
   firstName          String?
   lastName           String?
   email              String?  // defaults to user.email, but editable
+  phone              String?
   graduationYear     String?  // 4-digit year as string
   highSchool         String?
   club               String?
+  otherTeams         String?  // free-text for additional teams
   residence          String?  // free-text city
   height             String?
   primaryPosition    String?  // enum: Setter, Outside Hitter, etc.
   secondaryPosition  String?  // enum: same options
-  gpa                String?
+  dominantHand       String?  // Left or Right
   standingTouch      String?
   spikeTouch         String?
+  blockTouch         String?
+  gpa                String?
+  areaOfStudy        String?
+  careerGoals        String?
   
   // TIMESTAMPS
   createdAt       DateTime @default(now())

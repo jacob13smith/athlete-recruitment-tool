@@ -56,16 +56,22 @@ export async function POST() {
         firstName: user.draftProfile.firstName,
         lastName: user.draftProfile.lastName,
         email: user.draftProfile.email,
+        phone: user.draftProfile.phone,
         graduationYear: user.draftProfile.graduationYear,
         highSchool: user.draftProfile.highSchool,
         club: user.draftProfile.club,
+        otherTeams: user.draftProfile.otherTeams,
         residence: user.draftProfile.residence,
         height: user.draftProfile.height,
         primaryPosition: user.draftProfile.primaryPosition,
         secondaryPosition: user.draftProfile.secondaryPosition,
-        gpa: user.draftProfile.gpa,
+        dominantHand: user.draftProfile.dominantHand,
         standingTouch: user.draftProfile.standingTouch,
         spikeTouch: user.draftProfile.spikeTouch,
+        blockTouch: user.draftProfile.blockTouch,
+        gpa: user.draftProfile.gpa,
+        areaOfStudy: user.draftProfile.areaOfStudy,
+        careerGoals: user.draftProfile.careerGoals,
       },
     })
 
@@ -112,8 +118,9 @@ export async function POST() {
     })
   } catch (error) {
     console.error("Error publishing profile:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to publish profile" },
+      { error: "Failed to publish profile", details: errorMessage },
       { status: 500 }
     )
   }

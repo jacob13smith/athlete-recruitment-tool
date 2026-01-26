@@ -9,7 +9,22 @@ export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
 
 const videoSchema = z.object({
-  url: z.string().min(1, "URL is required").optional(),
+  url: z
+    .string()
+    .min(1, "URL is required")
+    .refine(
+      (url) => {
+        // Basic URL format check
+        try {
+          new URL(url)
+          return true
+        } catch {
+          return false
+        }
+      },
+      { message: "URL must be a valid URL format" }
+    )
+    .optional(),
   title: z.string().nullish(),
 })
 
@@ -114,8 +129,9 @@ export async function PUT(
     return NextResponse.json(updatedVideo)
   } catch (error) {
     console.error("Error updating video:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to update video" },
+      { error: "Failed to update video", details: errorMessage },
       { status: 500 }
     )
   }
@@ -166,8 +182,9 @@ export async function DELETE(
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error("Error deleting video:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to delete video" },
+      { error: "Failed to delete video", details: errorMessage },
       { status: 500 }
     )
   }

@@ -72,14 +72,24 @@ export async function POST(request: NextRequest) {
     if (error?.code === "P2021" || error?.message?.includes("does not exist")) {
       return NextResponse.json(
         { 
-          error: "Database table not found. Please run 'npm run db:push' to set up the database." 
+          error: "Database table not found. Please run 'npm run db:push' to set up the database.",
+          details: error?.message || "Database schema not initialized"
         },
         { status: 500 }
       )
     }
     
+    // Check for unique constraint violation (duplicate email)
+    if (error?.code === "P2002") {
+      return NextResponse.json(
+        { error: "User with this email already exists" },
+        { status: 400 }
+      )
+    }
+    
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error", details: errorMessage },
       { status: 500 }
     )
   }

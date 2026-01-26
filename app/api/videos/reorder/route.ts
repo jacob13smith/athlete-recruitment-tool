@@ -79,8 +79,9 @@ export async function PUT(request: Request) {
     return NextResponse.json(updatedVideos)
   } catch (error) {
     console.error("Error reordering videos:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to reorder videos" },
+      { error: "Failed to reorder videos", details: errorMessage },
       { status: 500 }
     )
   }

@@ -35,7 +35,9 @@ export async function GET() {
 
       await db.user.update({
         where: { id: user.id },
-        data: { draftProfileId: newProfile.id },
+        data: { 
+          draftProfileId: newProfile.id
+        } as any, // Type assertion needed for Prisma 7 compatibility
       })
 
       return NextResponse.json(newProfile)
@@ -53,8 +55,9 @@ export async function GET() {
     return NextResponse.json(draftProfile)
   } catch (error) {
     console.error("Error fetching draft profile:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to fetch profile" },
+      { error: "Failed to fetch profile", details: errorMessage },
       { status: 500 }
     )
   }
@@ -92,10 +95,49 @@ export async function PUT(request: Request) {
     }
 
     // Prepare update data (convert empty strings to null)
-    const updateData: Record<string, string | null> = {}
-    for (const [key, value] of Object.entries(data)) {
-      updateData[key] = value === "" ? null : value || null
-    }
+    // Use Prisma's Prisma.ProfileUpdateInput type for type safety
+    const updateData: {
+      firstName?: string | null
+      lastName?: string | null
+      email?: string | null
+      phone?: string | null
+      graduationYear?: string | null
+      highSchool?: string | null
+      club?: string | null
+      otherTeams?: string | null
+      residence?: string | null
+      height?: string | null
+      primaryPosition?: string | null
+      secondaryPosition?: string | null
+      dominantHand?: string | null
+      standingTouch?: string | null
+      spikeTouch?: string | null
+      blockTouch?: string | null
+      gpa?: string | null
+      areaOfStudy?: string | null
+      careerGoals?: string | null
+    } = {}
+    
+    // Type-safe assignment of validated data
+    if (data.firstName !== undefined) updateData.firstName = data.firstName === "" ? null : data.firstName
+    if (data.lastName !== undefined) updateData.lastName = data.lastName === "" ? null : data.lastName
+    if (data.email !== undefined) updateData.email = data.email === "" ? null : data.email
+    if (data.phone !== undefined) updateData.phone = data.phone === "" ? null : data.phone
+    if (data.graduationYear !== undefined) updateData.graduationYear = data.graduationYear === "" ? null : data.graduationYear
+    if (data.highSchool !== undefined) updateData.highSchool = data.highSchool === "" ? null : data.highSchool
+    if (data.club !== undefined) updateData.club = data.club === "" ? null : data.club
+    if (data.otherTeams !== undefined) updateData.otherTeams = data.otherTeams === "" ? null : data.otherTeams
+    if (data.residence !== undefined) updateData.residence = data.residence === "" ? null : data.residence
+    if (data.height !== undefined) updateData.height = data.height === "" ? null : data.height
+    if (data.primaryPosition !== undefined) updateData.primaryPosition = data.primaryPosition === "" ? null : data.primaryPosition
+    if (data.secondaryPosition !== undefined) updateData.secondaryPosition = data.secondaryPosition === "" ? null : data.secondaryPosition
+    if (data.dominantHand !== undefined) updateData.dominantHand = data.dominantHand === "" ? null : data.dominantHand
+    if (data.standingTouch !== undefined) updateData.standingTouch = data.standingTouch === "" ? null : data.standingTouch
+    if (data.spikeTouch !== undefined) updateData.spikeTouch = data.spikeTouch === "" ? null : data.spikeTouch
+    if (data.blockTouch !== undefined) updateData.blockTouch = data.blockTouch === "" ? null : data.blockTouch
+    if (data.gpa !== undefined) updateData.gpa = data.gpa === "" ? null : data.gpa
+    if (data.areaOfStudy !== undefined) updateData.areaOfStudy = data.areaOfStudy === "" ? null : data.areaOfStudy
+    if (data.careerGoals !== undefined) updateData.careerGoals = data.careerGoals === "" ? null : data.careerGoals
 
     // If no draft profile exists, create one
     if (!user.draftProfileId) {
@@ -108,7 +150,9 @@ export async function PUT(request: Request) {
 
       await db.user.update({
         where: { id: user.id },
-        data: { draftProfileId: newProfile.id },
+        data: { 
+          draftProfileId: newProfile.id
+        } as any, // Type assertion needed for Prisma 7 compatibility
       })
 
       return NextResponse.json(newProfile)
@@ -123,8 +167,9 @@ export async function PUT(request: Request) {
     return NextResponse.json(updatedProfile)
   } catch (error) {
     console.error("Error updating draft profile:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to update profile" },
+      { error: "Failed to update profile", details: errorMessage },
       { status: 500 }
     )
   }

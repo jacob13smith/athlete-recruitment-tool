@@ -12,7 +12,21 @@ const MAX_VIDEOS = 10
 
 // Video schema for validation
 const videoSchema = z.object({
-  url: z.string().min(1, "URL is required"),
+  url: z
+    .string()
+    .min(1, "URL is required")
+    .refine(
+      (url) => {
+        // Basic URL format check
+        try {
+          new URL(url)
+          return true
+        } catch {
+          return false
+        }
+      },
+      { message: "URL must be a valid URL format" }
+    ),
   title: z.string().nullish(),
 })
 
@@ -47,8 +61,9 @@ export async function GET() {
     return NextResponse.json(videos)
   } catch (error) {
     console.error("Error fetching videos:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to fetch videos" },
+      { error: "Failed to fetch videos", details: errorMessage },
       { status: 500 }
     )
   }
@@ -105,7 +120,9 @@ export async function POST(request: Request) {
 
       await db.user.update({
         where: { id: user.id },
-        data: { draftProfileId: newProfile.id },
+        data: { 
+          draftProfileId: newProfile.id
+        } as any, // Type assertion needed for Prisma 7 compatibility
       })
 
       // Use the new profile ID
@@ -224,8 +241,9 @@ export async function POST(request: Request) {
     return NextResponse.json(newVideo)
   } catch (error) {
     console.error("Error creating video:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: "Failed to create video" },
+      { error: "Failed to create video", details: errorMessage },
       { status: 500 }
     )
   }

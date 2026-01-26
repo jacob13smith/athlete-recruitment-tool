@@ -19,16 +19,49 @@ function getPrismaClient(): PrismaClient {
   }
 
   const adapter = new PrismaPg({ connectionString })
-  // Type assertion needed for Prisma 7 adapter compatibility
-  // The adapter property is valid at runtime but TypeScript types may be out of sync
-  const clientOptions: any = {
+  // Prisma 7 with adapter: The adapter is valid at runtime
+  // IMPORTANT: Run `npm run db:generate` after schema changes to update TypeScript types
+  return new PrismaClient({
     adapter,
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-  }
-  return new PrismaClient(clientOptions)
+  } as any)
 }
 
-export const db: PrismaClient =
-  globalForPrisma.prisma ?? getPrismaClient()
+const _db = globalForPrisma.prisma ?? getPrismaClient()
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = _db
+
+// Type helper to ensure models are accessible
+// This works around Prisma 7 adapter type generation issues
+// Run `npm run db:generate` to regenerate types after schema changes
+// The models exist at runtime - this type assertion makes TypeScript aware of them
+type PrismaClientWithModels = PrismaClient & {
+  profile: {
+    create: (args: any) => Promise<any>
+    findUnique: (args: any) => Promise<any>
+    findMany: (args?: any) => Promise<any[]>
+    update: (args: any) => Promise<any>
+    delete: (args: any) => Promise<any>
+    count: (args?: any) => Promise<number>
+  }
+  video: {
+    create: (args: any) => Promise<any>
+    findUnique: (args: any) => Promise<any>
+    findMany: (args?: any) => Promise<any[]>
+    findFirst: (args?: any) => Promise<any>
+    update: (args: any) => Promise<any>
+    delete: (args: any) => Promise<any>
+    count: (args?: any) => Promise<number>
+  }
+  user: {
+    create: (args: any) => Promise<any>
+    findUnique: (args: any) => Promise<any>
+    findMany: (args?: any) => Promise<any[]>
+    update: (args: any) => Promise<any>
+    delete: (args: any) => Promise<any>
+  }
+}
+
+// Export with type assertion - models exist at runtime after prisma generate
+// Using 'as unknown as' to bypass the type check while preserving model access
+export const db = _db as unknown as PrismaClientWithModels
