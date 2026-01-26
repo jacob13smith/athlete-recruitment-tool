@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useImperativeHandle, forwardRef } from "react"
+import { useState, useEffect, useImperativeHandle, forwardRef, useCallback } from "react"
 import { validateYouTubeUrl, extractYouTubeVideoId } from "@/lib/youtube-utils"
 import VideoEmbed from "./VideoEmbed"
 import { toast } from "sonner"
@@ -37,11 +37,7 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
   const [urlError, setUrlError] = useState<string | null>(null)
 
 
-  useEffect(() => {
-    loadVideos()
-  }, [])
-
-  const loadVideos = async () => {
+  const loadVideos = useCallback(async () => {
     setIsLoading(true)
     try {
       const response = await fetch("/api/videos")
@@ -59,7 +55,11 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [toast])
+
+  useEffect(() => {
+    loadVideos()
+  }, [loadVideos])
 
   // Check if there are pending video changes
   const hasVideoChanges = () => {
@@ -97,24 +97,32 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
       try {
         // Delete videos that were marked for deletion
         for (const videoId of deletedVideoIds) {
-          await fetch(`/api/videos/${videoId}`, {
+          const deleteResponse = await fetch(`/api/videos/${videoId}`, {
             method: "DELETE",
           })
+          if (!deleteResponse.ok) {
+            const errorData = await deleteResponse.json()
+            throw new Error(errorData.error || "Failed to delete video")
+          }
         }
 
         // Add new videos
         const newVideos = videos.filter(v => v.id.startsWith("temp-"))
         for (const video of newVideos) {
-          await fetch("/api/videos", {
+          const addResponse = await fetch("/api/videos", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               url: video.url,
-              title: video.title,
+              title: video.title || undefined,
             }),
           })
+          if (!addResponse.ok) {
+            const errorData = await addResponse.json()
+            throw new Error(errorData.error || "Failed to add video")
+          }
         }
 
         // Update edited videos
@@ -126,16 +134,20 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
         })
 
         for (const video of editedVideos) {
-          await fetch(`/api/videos/${video.id}`, {
+          const updateResponse = await fetch(`/api/videos/${video.id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               url: video.url,
-              title: video.title,
+              title: video.title || undefined,
             }),
           })
+          if (!updateResponse.ok) {
+            const errorData = await updateResponse.json()
+            throw new Error(errorData.error || "Failed to update video")
+          }
         }
 
         // Reload videos to get fresh state from DB
@@ -143,11 +155,12 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
         return true
       } catch (error) {
         console.error("Error saving video changes:", error)
-        toast.error("Failed to save video changes")
+        const errorMessage = error instanceof Error ? error.message : "Failed to save video changes"
+        toast.error(errorMessage)
         return false
       }
     },
-  }), [videos, deletedVideoIds, originalVideos])
+  }), [videos, deletedVideoIds, originalVideos, toast, loadVideos])
 
   const clearMessages = () => {
     setUrlError(null)

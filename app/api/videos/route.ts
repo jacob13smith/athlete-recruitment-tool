@@ -9,7 +9,7 @@ const MAX_VIDEOS = 10
 // Video schema for validation
 const videoSchema = z.object({
   url: z.string().min(1, "URL is required"),
-  title: z.string().optional(),
+  title: z.string().nullish(),
 })
 
 // GET: List Videos for user's draft Profile
