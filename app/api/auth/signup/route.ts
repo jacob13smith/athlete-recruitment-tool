@@ -48,20 +48,19 @@ export async function POST(request: NextRequest) {
       data: {
         email,
         password: hashedPassword,
-        name: null,
       },
     })
 
-      return NextResponse.json(
-        {
-          message: "User created successfully",
-          user: {
-            id: user.id,
-            email: user.email,
-          },
+    return NextResponse.json(
+      {
+        message: "User created successfully",
+        user: {
+          id: user.id,
+          email: user.email,
         },
-        { status: 201 }
-      )
+      },
+      { status: 201 }
+    )
   } catch (error: any) {
     console.error("Signup error:", error)
     

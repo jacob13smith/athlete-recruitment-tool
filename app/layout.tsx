@@ -3,8 +3,8 @@ import "./globals.css"
 import { Providers } from "@/components/providers"
 
 export const metadata: Metadata = {
-  title: "ShowOff",
-  description: "Show off your volleyball profile for recruiters and coaches",
+  title: "RecruitMe",
+  description: "Create and share your volleyball profile for recruiters and coaches",
 }
 
 export default function RootLayout({

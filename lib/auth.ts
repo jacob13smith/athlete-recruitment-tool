@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { db } from "./db"
-import bcrypt from "bcryptjs"
+import { verifyPassword } from "./utils"
 import { z } from "zod"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -26,13 +26,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           if (!user) return null
 
-          const passwordsMatch = await bcrypt.compare(password, user.password)
+          const passwordsMatch = await verifyPassword(password, user.password)
 
           if (passwordsMatch) {
             return {
               id: user.id,
               email: user.email,
-              name: user.name || undefined,
             }
           }
         }

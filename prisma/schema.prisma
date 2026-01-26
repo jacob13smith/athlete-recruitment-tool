@@ -7,16 +7,78 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
-  password  String
-  name      String?
+  password  String   // hashed with bcryptjs
+  
+  // PUBLISHING METADATA (stored on User)
+  slug            String? @unique  // UUIDv4, generated on first publish
+  isPublished     Boolean @default(false)
+  publishedAt     DateTime?
+  
+  // RELATIONS (optional - user may not have profiles yet)
+  draftProfileId     String? @unique
+  draftProfile       Profile? @relation("DraftProfile", fields: [draftProfileId], references: [id], onDelete: Cascade)
+  
+  publishedProfileId String? @unique
+  publishedProfile   Profile? @relation("PublishedProfile", fields: [publishedProfileId], references: [id], onDelete: Cascade)
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  
   @@map("users")
+}
+
+// SINGLE PROFILE MODEL (used for both draft and published)
+model Profile {
+  id        String   @id @default(cuid())
+  
+  // PROFILE FIELDS (same structure for draft and published)
+  firstName          String?
+  lastName           String?
+  email              String?  // defaults to user.email, but editable
+  graduationYear     String?  // 4-digit year as string
+  highSchool         String?
+  club               String?
+  residence          String?  // free-text city
+  height             String?
+  primaryPosition    String?  // enum: Setter, Outside Hitter, etc.
+  secondaryPosition  String?  // enum: same options
+  gpa                String?
+  standingTouch      String?
+  spikeTouch         String?
+  
+  // TIMESTAMPS
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // RELATIONS
+  videos         Video[]
+  
+  // Back-references for Prisma relation system (not used in queries)
+  draftUsers     User[]    @relation("DraftProfile")
+  publishedUsers User[]    @relation("PublishedProfile")
+  
+  @@map("profiles")
+}
+
+// SINGLE VIDEO MODEL (used for both draft and published)
+model Video {
+  id        String   @id @default(cuid())
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  // VIDEO FIELDS
+  url       String   // YouTube URL (required)
+  title     String?
+  order     Int      @default(0)  // Order within videos
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("videos")
+  @@index([profileId, order])
 }

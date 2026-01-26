@@ -1,12 +1,13 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import LogoutButton from "@/components/LogoutButton"
+import DashboardClient from "@/components/DashboardClient"
 
 export default async function DashboardPage() {
   const session = await auth()
 
   if (!session) {
-    redirect("/login")
+    redirect("/")
   }
 
   return (
@@ -17,23 +18,8 @@ export default async function DashboardPage() {
             <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
             <LogoutButton />
           </div>
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm text-gray-500">Email</p>
-              <p className="text-lg font-medium">{session.user.email}</p>
-            </div>
-            {session.user.name && (
-              <div>
-                <p className="text-sm text-gray-500">Name</p>
-                <p className="text-lg font-medium">{session.user.name}</p>
-              </div>
-            )}
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <p className="text-gray-600">
-                Welcome to ShowOff! Profile management features coming soon.
-              </p>
-            </div>
-          </div>
+
+          <DashboardClient />
         </div>
       </div>
     </div>
