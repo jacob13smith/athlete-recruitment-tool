@@ -19,7 +19,6 @@ function getPrismaClient() {
 
   const adapter = new PrismaPg({ connectionString })
   return new PrismaClient({
-    // @ts-expect-error - Prisma 7 adapter type compatibility issue
     adapter,
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   })
