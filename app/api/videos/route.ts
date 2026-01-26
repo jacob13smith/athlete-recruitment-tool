@@ -4,6 +4,10 @@ import { validateYouTubeUrl, extractYouTubeVideoId } from "@/lib/youtube-utils"
 import { z } from "zod"
 import { NextResponse } from "next/server"
 
+// Prevent static analysis during build
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 const MAX_VIDEOS = 10
 
 // Video schema for validation

@@ -55,14 +55,15 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
     } finally {
       setIsLoading(false)
     }
-  }, [toast])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     loadVideos()
   }, [loadVideos])
 
   // Check if there are pending video changes
-  const hasVideoChanges = () => {
+  const hasVideoChanges = useCallback((): boolean => {
     // Check for deletions
     if (deletedVideoIds.size > 0) return true
 
@@ -82,14 +83,14 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
     }
 
     return false
-  }
+  }, [videos, deletedVideoIds, originalVideos])
 
   // Notify parent of changes
   useEffect(() => {
     if (onChangesChange) {
       onChangesChange(hasVideoChanges())
     }
-  }, [videos, deletedVideoIds, originalVideos, onChangesChange])
+  }, [videos, deletedVideoIds, originalVideos, onChangesChange, hasVideoChanges])
 
   // Expose save function to parent via ref
   useImperativeHandle(ref, () => ({
@@ -160,7 +161,8 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
         return false
       }
     },
-  }), [videos, deletedVideoIds, originalVideos, toast, loadVideos])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [videos, deletedVideoIds, originalVideos, loadVideos])
 
   const clearMessages = () => {
     setUrlError(null)

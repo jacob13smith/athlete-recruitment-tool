@@ -3,6 +3,10 @@ import { db } from "@/lib/db"
 import { hashPassword } from "@/lib/utils"
 import { z } from "zod"
 
+// Prevent static analysis during build
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 const signupSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z

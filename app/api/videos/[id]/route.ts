@@ -4,6 +4,10 @@ import { validateYouTubeUrl, extractYouTubeVideoId } from "@/lib/youtube-utils"
 import { z } from "zod"
 import { NextResponse } from "next/server"
 
+// Prevent static analysis during build
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 const videoSchema = z.object({
   url: z.string().min(1, "URL is required").optional(),
   title: z.string().nullish(),

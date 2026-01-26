@@ -3,6 +3,10 @@ import { db } from "@/lib/db"
 import { profileSchema } from "@/lib/validations"
 import { NextResponse } from "next/server"
 
+// Prevent static analysis during build
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 // GET: Return user's draft Profile (create if doesn't exist)
 export async function GET() {
   try {

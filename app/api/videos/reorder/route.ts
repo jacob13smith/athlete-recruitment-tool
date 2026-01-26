@@ -3,6 +3,10 @@ import { db } from "@/lib/db"
 import { z } from "zod"
 import { NextResponse } from "next/server"
 
+// Prevent static analysis during build
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 const reorderSchema = z.object({
   videoIds: z.array(z.string()).min(1, "At least one video ID is required"),
 })

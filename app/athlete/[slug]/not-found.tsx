@@ -9,7 +9,7 @@ export default function NotFound() {
           Profile Not Found
         </h2>
         <p className="text-gray-600 mb-8">
-          This profile doesn't exist or hasn't been published yet.
+          This profile doesn&apos;t exist or hasn&apos;t been published yet.
         </p>
         <Link
           href="/"

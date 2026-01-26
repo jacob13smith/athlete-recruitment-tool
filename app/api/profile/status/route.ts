@@ -2,6 +2,10 @@ import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server"
 
+// Prevent static analysis during build
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 // GET: Compute hasUnpublishedChanges
 export async function GET() {
   try {

@@ -105,7 +105,7 @@ export default function LoginForm({ onToggle }: LoginFormProps) {
       </div>
 
       <div className="text-center text-sm">
-        <span className="text-gray-600">Don't have an account? </span>
+        <span className="text-gray-600">Don&apos;t have an account? </span>
         <button
           type="button"
           onClick={onToggle}
