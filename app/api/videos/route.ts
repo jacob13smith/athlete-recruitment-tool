@@ -191,7 +191,7 @@ export async function POST(request: Request) {
         where: { profileId: user.draftProfileId },
       })
       const existingVideoIds = existingVideos
-        .map((v) => extractYouTubeVideoId(v.url))
+        .map((v: { url: string }) => extractYouTubeVideoId(v.url))
         .filter(Boolean)
       if (existingVideoIds.includes(newVideoId)) {
         return NextResponse.json(
