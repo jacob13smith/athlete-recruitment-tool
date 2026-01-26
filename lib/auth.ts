@@ -4,8 +4,13 @@ import { db } from "./db"
 import { verifyPassword } from "./utils"
 import { z } from "zod"
 
+// Validate required environment variables
+if (!process.env.NEXTAUTH_SECRET && !process.env.AUTH_SECRET) {
+  console.error('NEXTAUTH_SECRET or AUTH_SECRET must be set')
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
   providers: [
     Credentials({
       credentials: {
@@ -13,30 +18,36 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" }
       },
       authorize: async (credentials) => {
-        const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
-          .safeParse(credentials)
+        try {
+          const parsedCredentials = z
+            .object({ email: z.string().email(), password: z.string().min(6) })
+            .safeParse(credentials)
 
-        if (parsedCredentials.success) {
-          const { email, password } = parsedCredentials.data
-          
-          const user = await db.user.findUnique({
-            where: { email }
-          })
+          if (parsedCredentials.success) {
+            const { email, password } = parsedCredentials.data
+            
+            const user = await db.user.findUnique({
+              where: { email }
+            })
 
-          if (!user) return null
+            if (!user) return null
 
-          const passwordsMatch = await verifyPassword(password, user.password)
+            const passwordsMatch = await verifyPassword(password, user.password)
 
-          if (passwordsMatch) {
-            return {
-              id: user.id,
-              email: user.email,
+            if (passwordsMatch) {
+              return {
+                id: user.id,
+                email: user.email,
+              }
             }
           }
-        }
 
-        return null
+          return null
+        } catch (error) {
+          console.error('NextAuth authorize error:', error)
+          // Return null on error to prevent exposing internal errors
+          return null
+        }
       },
     }),
   ],
