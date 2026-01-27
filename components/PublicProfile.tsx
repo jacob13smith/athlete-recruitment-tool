@@ -57,6 +57,13 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
     .filter(Boolean)
     .join(" ")
 
+  // Build list of info items for the banner
+  const infoItems: string[] = []
+  if (profile.primaryPosition) infoItems.push(profile.primaryPosition)
+  if (profile.graduationYear) infoItems.push(`Class of ${profile.graduationYear}`)
+  if (profile.highSchool) infoItems.push(profile.highSchool)
+  if (profile.club) infoItems.push(profile.club)
+
   // Check if section has any content
   const hasBasicInfo = profile.primaryPosition || profile.dominantHand || profile.height || profile.graduationYear
   const hasAthleticProfile = profile.primaryPosition || profile.secondaryPosition || profile.dominantHand || profile.height || profile.standingTouch || profile.spikeTouch || profile.blockTouch
@@ -70,38 +77,56 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
         <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
           {/* Top Level Header - Athlete's Name */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-8 sm:px-8">
-            <div className="flex items-start gap-6 justify-center">
-              {profile.profileImageUrl && (
-                <div className="relative flex-shrink-0">
-                  <NextImage
-                    src={profile.profileImageUrl}
-                    alt={fullName || "Profile"}
-                    width={160}
-                    height={160}
-                    className="rounded-full object-cover border-4 border-white shadow-lg"
-                    unoptimized
-                  />
-                </div>
+            <div className="flex items-center gap-6 justify-center">
+              {profile.profileImageUrl ? (
+                <>
+                  <div className="relative flex-shrink-0">
+                    <NextImage
+                      src={profile.profileImageUrl}
+                      alt={fullName || "Profile"}
+                      width={160}
+                      height={160}
+                      className="rounded-full object-cover border-4 border-white shadow-lg"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+                      {fullName || "Athlete Profile"}
+                    </h1>
+                    <div className="space-y-0 text-lg sm:text-xl text-blue-100">
+                      {infoItems.map((item, index) => (
+                        <div
+                          key={index}
+                          className={index < infoItems.length - 1 ? "pb-2 border-b border-blue-500/50" : "pt-2"}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex-shrink-0">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-white">
+                      {fullName || "Athlete Profile"}
+                    </h1>
+                  </div>
+                  <div className="min-w-0">
+                    <div className="space-y-0 text-lg sm:text-xl text-blue-100">
+                      {infoItems.map((item, index) => (
+                        <div
+                          key={index}
+                          className={index < infoItems.length - 1 ? "pb-2 border-b border-blue-500/50" : "pt-2"}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
               )}
-              <div className="min-w-0">
-                <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-                  {fullName || "Athlete Profile"}
-                </h1>
-                <div className="space-y-1 text-lg sm:text-xl text-blue-100">
-                  {profile.primaryPosition && (
-                    <div>{profile.primaryPosition}</div>
-                  )}
-                  {profile.graduationYear && (
-                    <div>Class of {profile.graduationYear}</div>
-                  )}
-                  {profile.highSchool && (
-                    <div>{profile.highSchool}</div>
-                  )}
-                  {profile.club && (
-                    <div>{profile.club}</div>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
 
