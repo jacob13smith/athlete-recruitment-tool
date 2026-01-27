@@ -16,7 +16,7 @@ export async function POST() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // Get user with draft profile
+    // Get user with draft profile and published profile (to compare names)
     const user = await db.user.findUnique({
       where: { id: session.user.id },
       include: {
@@ -25,6 +25,12 @@ export async function POST() {
             videos: {
               orderBy: { order: "asc" },
             },
+          },
+        },
+        publishedProfile: {
+          select: {
+            firstName: true,
+            lastName: true,
           },
         },
       },
