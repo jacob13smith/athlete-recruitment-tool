@@ -46,9 +46,9 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
     if (!value || value.trim() === "") return null
 
     return (
-      <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+      <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
         <dt className="text-base font-semibold text-gray-700">{label}</dt>
-        <dd className="mt-1 text-lg text-gray-900 font-medium">{value}</dd>
+        <dd className="text-lg text-gray-900 font-medium">{value}</dd>
       </div>
     )
   }
@@ -73,10 +73,10 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-4xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-8">
         <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
           {/* Top Level Header - Athlete's Name */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-5 sm:px-6 sm:py-8">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-4 sm:px-6 sm:py-8">
             <div className="flex items-center gap-4 sm:gap-6 justify-center">
               {profile.profileImageUrl ? (
                 <>
@@ -87,6 +87,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                       width={160}
                       height={160}
                       className="rounded-full object-cover border-4 border-white shadow-lg w-20 h-20 sm:w-40 sm:h-40"
+                      style={{ boxSizing: 'border-box' }}
                       unoptimized
                     />
                   </div>
@@ -132,8 +133,8 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
           {/* First Section: Basic Info (primary position, handedness, height, grad year) */}
           {hasBasicInfo && (
-            <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+            <div className="px-2 py-2 sm:px-8 sm:py-6 border-b border-gray-200">
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 sm:gap-y-3">
                 {renderField("Primary Position", profile.primaryPosition)}
                 {renderField("Handedness", profile.dominantHand)}
                 {renderField("Height", profile.height)}
@@ -144,15 +145,15 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
           {/* Second Section: Videos */}
           {profile.videos && profile.videos.length > 0 && (
-            <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            <div className="px-4 py-3 sm:px-8 sm:py-6 border-b border-gray-200">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-6">
                 Gameplay
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                 {profile.videos.map((video) => (
-                  <div key={video.id} className="bg-white rounded-lg p-4" style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2)' }}>
+                  <div key={video.id} className="bg-white rounded-lg p-3 sm:p-4" style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2)' }}>
                     {video.title && (
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 sm:mb-3">
                         {video.title}
                       </h3>
                     )}
@@ -165,11 +166,11 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
           {/* Third Section: Athletic Profile */}
           {hasAthleticProfile && (
-            <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <div className="px-2 py-3 sm:px-8 sm:py-6 border-b border-gray-200">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Athletic Profile
               </h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 sm:gap-y-3">
                 {renderField("Primary Position", profile.primaryPosition)}
                 {renderField("Secondary Position", profile.secondaryPosition)}
                 {renderField("Height", profile.height)}
@@ -183,11 +184,11 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
           {/* Fourth Section: Teams */}
           {hasTeams && (
-            <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <div className="px-2 py-3 sm:px-8 sm:py-6 border-b border-gray-200">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Teams
               </h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 sm:gap-y-3">
                 {renderField("High School", profile.highSchool)}
                 {renderField("Club", profile.club)}
                 {renderField("Other Teams", profile.otherTeams)}
@@ -197,17 +198,17 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
           {/* Fifth Section: Academics */}
           {hasAcademics && (
-            <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <div className="px-2 py-3 sm:px-8 sm:py-6 border-b border-gray-200">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Academics
               </h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 sm:gap-y-3">
                 {renderField("Average Grade", profile.gpa)}
                 {renderField("Area of Study", profile.areaOfStudy)}
                 {profile.careerGoals && (
-                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 sm:col-span-2">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 sm:col-span-2">
                     <dt className="text-base font-semibold text-gray-700">Career Goals</dt>
-                    <dd className="mt-1 text-lg text-gray-900 font-medium whitespace-pre-line">{profile.careerGoals}</dd>
+                    <dd className="text-lg text-gray-900 font-medium whitespace-pre-line">{profile.careerGoals}</dd>
                   </div>
                 )}
               </dl>
@@ -216,15 +217,15 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
           {/* Sixth Section: Contact */}
           {hasContact && (
-            <div className="px-6 py-6 sm:px-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <div className="px-2 py-3 sm:px-8 sm:py-6">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Contact
               </h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 sm:gap-y-3">
                 {profile.email && (
-                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
                     <dt className="text-base font-semibold text-gray-700">Email</dt>
-                    <dd className="mt-1 text-lg">
+                    <dd className="text-lg">
                       <a 
                         href={`mailto:${profile.email}`}
                         className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
@@ -235,9 +236,9 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                   </div>
                 )}
                 {profile.phone && (
-                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
                     <dt className="text-base font-semibold text-gray-700">Phone</dt>
-                    <dd className="mt-1 text-lg">
+                    <dd className="text-lg">
                       <a 
                         href={`tel:${profile.phone}`}
                         className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
@@ -252,7 +253,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
           )}
 
           {/* Powered by RecruitMe */}
-          <div className="px-6 py-4 sm:px-8 border-t border-gray-200 bg-gray-50">
+          <div className="px-4 py-3 sm:px-8 sm:py-4 border-t border-gray-200 bg-gray-50">
             <div className="flex items-center justify-center gap-2">
               <span className="text-sm text-gray-500">Powered by</span>
               <a
