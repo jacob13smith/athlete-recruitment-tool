@@ -44,7 +44,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
     if (!value || value.trim() === "") return null
 
     return (
-      <div className="py-2">
+      <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
         <dt className="text-base font-semibold text-gray-700">{label}</dt>
         <dd className="mt-1 text-lg text-gray-900 font-medium">{value}</dd>
       </div>
@@ -88,7 +88,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
           {/* Second Section: Videos */}
           {profile.videos && profile.videos.length > 0 && (
             <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 Gameplay
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -109,7 +109,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
           {/* Third Section: Athletic Profile */}
           {hasAthleticProfile && (
             <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Athletic Profile
               </h2>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
@@ -127,7 +127,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
           {/* Fourth Section: Teams */}
           {hasTeams && (
             <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Teams
               </h2>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
@@ -141,14 +141,14 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
           {/* Fifth Section: Academics */}
           {hasAcademics && (
             <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Academics
               </h2>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
                 {renderField("Average Grade", profile.gpa)}
                 {renderField("Area of Study", profile.areaOfStudy)}
                 {profile.careerGoals && (
-                  <div className="py-2 sm:col-span-2">
+                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 sm:col-span-2">
                     <dt className="text-base font-semibold text-gray-700">Career Goals</dt>
                     <dd className="mt-1 text-lg text-gray-900 font-medium whitespace-pre-line">{profile.careerGoals}</dd>
                   </div>
@@ -160,12 +160,12 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
           {/* Sixth Section: Contact */}
           {hasContact && (
             <div className="px-6 py-6 sm:px-8">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Contact
               </h2>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
                 {profile.email && (
-                  <div className="py-2">
+                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                     <dt className="text-base font-semibold text-gray-700">Email</dt>
                     <dd className="mt-1 text-lg">
                       <a 
@@ -178,7 +178,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                   </div>
                 )}
                 {profile.phone && (
-                  <div className="py-2">
+                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                     <dt className="text-base font-semibold text-gray-700">Phone</dt>
                     <dd className="mt-1 text-lg">
                       <a 
