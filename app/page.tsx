@@ -34,20 +34,21 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
-        <div>
-          <h1 className="text-center text-4xl font-bold tracking-tight text-gray-900 mb-2">
+      <div className="w-full max-w-md space-y-6">
+        <div className="space-y-4">
+          <h1 className="text-center text-4xl font-bold tracking-tight text-gray-900">
             RecruitMe
           </h1>
-          <p className="text-center text-sm text-gray-600 mb-6">
-            Create and share your volleyball profile for recruiters and coaches
+          <p className="text-center text-base font-medium text-gray-700">
+            Create and share your volleyball profile
           </p>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            {isSignup ? "Create your account" : "Sign in to your account"}
-          </h2>
         </div>
 
-        <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+        <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
+          {isSignup ? "Create your account" : "Sign in to your account"}
+        </h2>
+
+        <div className="bg-white py-8 px-6 rounded-lg sm:px-10" style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 4px 12px 0 rgba(0, 0, 0, 0.15)' }}>
           {isSignup ? (
             <SignupForm onToggle={() => setIsSignup(false)} />
           ) : (
