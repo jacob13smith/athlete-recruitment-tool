@@ -3,15 +3,17 @@
 import { useState, useEffect, useRef } from "react"
 import { POSITION_OPTIONS, type ProfileFormData } from "@/lib/validations"
 import { toast } from "sonner"
+import ProfileImageUpload from "./ProfileImageUpload"
 
 interface ProfileFormProps {
   initialData?: Partial<ProfileFormData> | null
   formRef?: React.RefObject<ProfileFormRef>
   onSaveStateChange?: (isSaving: boolean) => void
   onHasChangesChange?: (hasChanges: boolean) => void
+  onImageChange?: () => void // Callback to refresh publish status after image change
 }
 
-export default function ProfileForm({ initialData, formRef: externalFormRef, onSaveStateChange, onHasChangesChange }: ProfileFormProps) {
+export default function ProfileForm({ initialData, formRef: externalFormRef, onSaveStateChange, onHasChangesChange, onImageChange }: ProfileFormProps) {
   const formElementRef = useRef<HTMLFormElement>(null)
   const [formData, setFormData] = useState<Partial<ProfileFormData>>({
     firstName: "",
@@ -35,7 +37,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
     careerGoals: "",
     ...initialData,
   })
-  const [savedData, setSavedData] = useState<Partial<ProfileFormData> | null>(null)
+  const [savedData, setSavedData] = useState<Partial<ProfileFormData & { profileImageUrl?: string | null }> | null>(null)
+  const [savedImageUrl, setSavedImageUrl] = useState<string | null | undefined>(null)
 
   const [isLoading, setIsLoading] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
@@ -79,6 +82,7 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
         }))
         // Store saved data for comparison
         setSavedData(normalizedData)
+        setSavedImageUrl(data.profileImageUrl || null)
       }
     } catch (error) {
       console.error("Error loading profile:", error)
@@ -167,6 +171,7 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
           gpa: savedData.gpa || "",
           areaOfStudy: savedData.areaOfStudy || "",
           careerGoals: savedData.careerGoals || "",
+          profileImageUrl: savedData.profileImageUrl || "",
         }
         setSavedData(normalizedSavedData)
         toast.success("Profile saved successfully!")
@@ -224,6 +229,16 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
 
   return (
     <form ref={formElementRef} onSubmit={handleSubmit} className="space-y-6">
+      {/* Profile Image Upload */}
+      <ProfileImageUpload
+        currentImageUrl={savedImageUrl}
+        onImageChange={(url) => {
+          setSavedImageUrl(url)
+          // Image changes are saved immediately via API, not part of form data
+          // Trigger refresh of publish status to detect changes
+          onImageChange?.()
+        }}
+      />
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {/* First Name */}

@@ -95,6 +95,12 @@ export default function DashboardClient() {
             formRef={profileFormRef} 
             onSaveStateChange={updateIsSaving}
             onHasChangesChange={updateHasProfileChanges}
+            onImageChange={async () => {
+              // Refresh publish status after image upload/delete
+              if (publishControlsRef.current) {
+                await publishControlsRef.current.refreshStatus()
+              }
+            }}
           />
         </div>
 

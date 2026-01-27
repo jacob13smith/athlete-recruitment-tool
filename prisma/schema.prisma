@@ -57,6 +57,7 @@ model Profile {
   gpa                String?
   areaOfStudy        String?
   careerGoals        String?
+  profileImageUrl    String?  // URL to profile image in Supabase Storage
   
   // TIMESTAMPS
   createdAt       DateTime @default(now())

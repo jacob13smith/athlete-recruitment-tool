@@ -151,6 +151,7 @@ export async function POST() {
         gpa: user.draftProfile.gpa,
         areaOfStudy: user.draftProfile.areaOfStudy,
         careerGoals: user.draftProfile.careerGoals,
+        profileImageUrl: user.draftProfile.profileImageUrl,
       },
     })
 

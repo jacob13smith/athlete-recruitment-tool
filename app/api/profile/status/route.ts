@@ -76,6 +76,7 @@ export async function GET() {
       "gpa",
       "areaOfStudy",
       "careerGoals",
+      "profileImageUrl",
     ] as const
 
     const profileChanged = profileFields.some((field) => {

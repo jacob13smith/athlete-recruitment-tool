@@ -2,6 +2,7 @@
 
 import VideoEmbed from "./VideoEmbed"
 import { formatPhoneNumber } from "@/lib/utils"
+import NextImage from "next/image"
 
 interface Video {
   id: string
@@ -31,6 +32,7 @@ interface Profile {
   gpa: string | null
   areaOfStudy: string | null
   careerGoals: string | null
+  profileImageUrl?: string | null
   videos: Video[]
 }
 
@@ -68,9 +70,39 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
         <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
           {/* Top Level Header - Athlete's Name */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-8 sm:px-8">
-            <h1 className="text-3xl sm:text-4xl font-bold text-white">
-              {fullName || "Athlete Profile"}
-            </h1>
+            <div className="flex items-start gap-6 justify-center">
+              {profile.profileImageUrl && (
+                <div className="relative flex-shrink-0">
+                  <NextImage
+                    src={profile.profileImageUrl}
+                    alt={fullName || "Profile"}
+                    width={160}
+                    height={160}
+                    className="rounded-full object-cover border-4 border-white shadow-lg"
+                    unoptimized
+                  />
+                </div>
+              )}
+              <div className="min-w-0">
+                <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+                  {fullName || "Athlete Profile"}
+                </h1>
+                <div className="space-y-1 text-lg sm:text-xl text-blue-100">
+                  {profile.primaryPosition && (
+                    <div>{profile.primaryPosition}</div>
+                  )}
+                  {profile.graduationYear && (
+                    <div>Class of {profile.graduationYear}</div>
+                  )}
+                  {profile.highSchool && (
+                    <div>{profile.highSchool}</div>
+                  )}
+                  {profile.club && (
+                    <div>{profile.club}</div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* First Section: Basic Info (primary position, handedness, height, grad year) */}
