@@ -162,7 +162,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
           {/* Second Section: Videos */}
           {profile.videos && profile.videos.length > 0 && (
-            <div className="px-4 py-3 sm:px-8 sm:py-6 border-b border-gray-200">
+            <div className="px-2 py-3 sm:px-8 sm:py-6 border-b border-gray-200">
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-6">
                 Gameplay
               </h2>
@@ -170,7 +170,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 {profile.videos.map((video) => (
                   <div 
                     key={video.id}
-                    className="bg-white rounded-lg p-3 sm:p-4 h-full" 
+                    className="bg-white rounded-lg p-1 sm:p-4 h-full" 
                     style={{ 
                       boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2)'
                     }}
