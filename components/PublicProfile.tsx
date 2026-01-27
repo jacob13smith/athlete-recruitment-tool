@@ -130,7 +130,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 Teams
               </h2>
-              <dl className="space-y-3">
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
                 {renderField("High School", profile.highSchool)}
                 {renderField("Club", profile.club)}
                 {renderField("Other Teams", profile.otherTeams)}
@@ -144,9 +144,15 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 Academics
               </h2>
-              <dl className="space-y-3">
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
                 {renderField("Average Grade", profile.gpa)}
-                {/* Note: Area of study and career goals not in schema */}
+                {renderField("Area of Study", profile.areaOfStudy)}
+                {profile.careerGoals && (
+                  <div className="py-2 sm:col-span-2">
+                    <dt className="text-sm font-medium text-gray-500">Career Goals</dt>
+                    <dd className="mt-1 text-base text-gray-900 whitespace-pre-line">{profile.careerGoals}</dd>
+                  </div>
+                )}
               </dl>
             </div>
           )}
@@ -157,7 +163,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 Contact
               </h2>
-              <dl className="space-y-3">
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
                 {profile.email && (
                   <div className="py-2">
                     <dt className="text-sm font-medium text-gray-500">Email</dt>
