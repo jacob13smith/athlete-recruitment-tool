@@ -246,7 +246,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               </h2>
               <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
                 {profile.email && (
-                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2 sm:col-span-1">
                     <dt className="text-base font-semibold text-gray-700">Email</dt>
                     <dd className="text-lg">
                       <a 
@@ -259,7 +259,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                   </div>
                 )}
                 {profile.phone && (
-                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2 sm:col-span-1">
                     <dt className="text-base font-semibold text-gray-700">Phone</dt>
                     <dd className="text-lg">
                       <a 
