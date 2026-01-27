@@ -441,10 +441,10 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
           </select>
         </div>
 
-        {/* Dominant Hand */}
+        {/* Handedness */}
         <div>
           <label htmlFor="dominantHand" className="block text-sm font-medium text-gray-700">
-            Dominant Hand
+            Handedness
           </label>
           <select
             id="dominantHand"

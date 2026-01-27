@@ -119,7 +119,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 {renderField("Standing Reach", profile.standingTouch)}
                 {renderField("Spike Touch", profile.spikeTouch)}
                 {renderField("Block Touch", profile.blockTouch)}
-                {renderField("Dominant Hand", profile.dominantHand)}
+                {renderField("Handedness", profile.dominantHand)}
               </dl>
             </div>
           )}

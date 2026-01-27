@@ -283,7 +283,7 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
     <div className="space-y-6">
 
       {/* Add Video Form */}
-      {!isEditing && videos.length < MAX_VIDEOS && (
+      {videos.length < MAX_VIDEOS && (
         <div className="bg-gray-50 p-4 rounded-lg">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Add Video</h3>
           <form onSubmit={handleAddVideo} className="space-y-4">
@@ -300,11 +300,12 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
                   setUrlError(null)
                 }}
                 placeholder="https://www.youtube.com/watch?v=..."
-                className={`mt-1 block w-full rounded-md shadow-sm focus:ring-blue-500 sm:text-sm ${
+                disabled={isEditing !== null}
+                className={`mt-1 block w-full rounded-md shadow-sm focus:ring-blue-500 sm:text-sm px-3 py-2 ${
                   urlError
                     ? "border-red-300 focus:border-red-500"
                     : "border-gray-300 focus:border-blue-500"
-                }`}
+                } ${isEditing !== null ? "bg-gray-100 cursor-not-allowed" : ""}`}
                 required
               />
               <div className="h-5 mt-1">
@@ -323,14 +324,15 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
                 value={videoTitle}
                 onChange={(e) => setVideoTitle(e.target.value)}
                 placeholder="Video title"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                disabled={isEditing !== null}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2 ${isEditing !== null ? "bg-gray-100 cursor-not-allowed" : ""}`}
               />
             </div>
             <div className="flex justify-end">
               <button
                 type="submit"
-                disabled={isAdding || !videoUrl.trim()}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-w-[100px]"
+                disabled={isAdding || !videoUrl.trim() || isEditing !== null}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium min-w-[100px]"
               >
                 {isAdding ? "Adding..." : "Add Video"}
               </button>
