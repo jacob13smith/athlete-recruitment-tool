@@ -135,8 +135,8 @@ const PublishControls = forwardRef<PublishControlsRef, PublishControlsProps>(
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="min-w-0 flex-shrink">
           <p className="text-sm font-medium text-gray-700">
             {status.isPublished ? "Published" : "Not Published"}
           </p>
@@ -145,9 +145,9 @@ const PublishControls = forwardRef<PublishControlsRef, PublishControlsProps>(
               href={`/athlete/${status.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-blue-600 hover:text-blue-800 underline mt-1 block flex items-center gap-1"
+              className="text-xs text-blue-600 hover:text-blue-800 underline mt-1 block flex items-center gap-1 break-all"
             >
-              <span>{typeof window !== "undefined" ? window.location.origin : ""}/athlete/{status.slug}</span>
+              <span className="break-words">{typeof window !== "undefined" ? window.location.origin : ""}/athlete/{status.slug}</span>
               <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
@@ -155,7 +155,7 @@ const PublishControls = forwardRef<PublishControlsRef, PublishControlsProps>(
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2 flex-shrink-0">
           {status.isPublished && (
             <button
               onClick={handleUnpublish}
