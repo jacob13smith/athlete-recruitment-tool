@@ -87,7 +87,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
       <div className="max-w-4xl mx-auto px-2 sm:px-6 py-2 sm:py-8">
         <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
           {/* Top Level Header - Athlete's Name */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-2 py-4 sm:px-6">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-2 py-2 sm:px-6">
             <div className="flex items-center gap-4 sm:gap-6 justify-center">
               {profile.profileImageUrl ? (
                 <>
