@@ -65,29 +65,30 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     )
-  } catch (error: any) {
+  } catch (error) {
     console.error("Signup error:", error)
     
+    const errorObj = error as { code?: string; message?: string }
+    const errorMessage = errorObj?.message || (error instanceof Error ? error.message : String(error))
+    
     // Check if it's a Prisma error about missing table
-    if (error?.code === "P2021" || error?.message?.includes("does not exist")) {
+    if (errorObj?.code === "P2021" || errorMessage.includes("does not exist")) {
       return NextResponse.json(
         { 
           error: "Database table not found. Please run 'npm run db:push' to set up the database.",
-          details: error?.message || "Database schema not initialized"
+          details: errorMessage || "Database schema not initialized"
         },
         { status: 500 }
       )
     }
     
     // Check for unique constraint violation (duplicate email)
-    if (error?.code === "P2002") {
+    if (errorObj?.code === "P2002") {
       return NextResponse.json(
         { error: "User with this email already exists" },
         { status: 400 }
       )
     }
-    
-    const errorMessage = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
       { error: "Internal server error", details: errorMessage },
       { status: 500 }

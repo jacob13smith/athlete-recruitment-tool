@@ -79,8 +79,8 @@ export default function DashboardClient() {
 
   // Refresh publish status after save (to update hasUnpublishedChanges)
   const handlePublishRefresh = async () => {
-    // This will be called by PublishControls after publish/unpublish
-    // Could trigger a refresh of the status if needed
+    // PublishControls handles its own refresh after publish/unpublish
+    // This callback is kept for potential future use
   }
 
   return (
