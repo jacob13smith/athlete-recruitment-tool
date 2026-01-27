@@ -176,7 +176,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                     }}
                   >
                     {video.title && (
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 sm:mb-3">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 sm:mb-3 px-2">
                         {video.title}
                       </h3>
                     )}
