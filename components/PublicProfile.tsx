@@ -61,12 +61,13 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
   // Build list of info items for the banner
   const infoItems: string[] = []
   if (profile.primaryPosition) infoItems.push(profile.primaryPosition)
-  if (profile.graduationYear) infoItems.push(`Class of ${profile.graduationYear}`)
-  // Third spot: City, Province
+  // Second spot: City, Province
   if (profile.residence || profile.province) {
     const hometown = [profile.residence, profile.province].filter(Boolean).join(", ")
     if (hometown) infoItems.push(hometown)
   }
+  // Third spot: Graduation year
+  if (profile.graduationYear) infoItems.push(`Class of ${profile.graduationYear}`)
   // Fourth spot: Club if exists, otherwise High School
   if (profile.club) {
     infoItems.push(profile.club)
