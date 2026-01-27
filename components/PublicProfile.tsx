@@ -76,8 +76,8 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
           {/* Top Level Header - Athlete's Name */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-8 sm:px-8">
-            <div className="flex items-center gap-6 justify-center">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-5 sm:px-6 sm:py-8">
+            <div className="flex items-center gap-4 sm:gap-6 justify-center">
               {profile.profileImageUrl ? (
                 <>
                   <div className="relative flex-shrink-0">
@@ -86,19 +86,19 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                       alt={fullName || "Profile"}
                       width={160}
                       height={160}
-                      className="rounded-full object-cover border-4 border-white shadow-lg"
+                      className="rounded-full object-cover border-4 border-white shadow-lg w-20 h-20 sm:w-40 sm:h-40"
                       unoptimized
                     />
                   </div>
-                  <div className="min-w-0">
-                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+                  <div className="min-w-0 flex-1 max-w-xs sm:max-w-none">
+                    <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-3">
                       {fullName || "Athlete Profile"}
                     </h1>
-                    <div className="text-lg sm:text-xl text-blue-100">
+                    <div className="text-sm sm:text-lg lg:text-xl text-blue-100">
                       {infoItems.map((item, index) => (
                         <div
                           key={index}
-                          className="py-2 border-b border-blue-500/50 last:border-b-0"
+                          className="py-1 sm:py-2 border-b border-blue-500/50 last:border-b-0"
                         >
                           {item}
                         </div>
@@ -109,16 +109,16 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               ) : (
                 <>
                   <div className="flex-shrink-0">
-                    <h1 className="text-3xl sm:text-4xl font-bold text-white">
+                    <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white">
                       {fullName || "Athlete Profile"}
                     </h1>
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-lg sm:text-xl text-blue-100">
+                  <div className="min-w-0 flex-1 max-w-xs sm:max-w-none">
+                    <div className="text-sm sm:text-lg lg:text-xl text-blue-100">
                       {infoItems.map((item, index) => (
                         <div
                           key={index}
-                          className="py-2 border-b border-blue-500/50 last:border-b-0"
+                          className="py-1 sm:py-2 border-b border-blue-500/50 last:border-b-0"
                         >
                           {item}
                         </div>
