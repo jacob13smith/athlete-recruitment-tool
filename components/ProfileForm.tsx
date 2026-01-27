@@ -237,7 +237,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             name="firstName"
             value={formData.firstName || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -252,7 +253,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             name="lastName"
             value={formData.lastName || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -267,17 +269,13 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             name="email"
             value={formData.email || ""}
             onChange={handleChange}
-            className={`mt-1 block w-full rounded-md shadow-sm focus:ring-blue-500 sm:text-base px-3 py-2 ${
+            className={`mt-1 block w-full rounded-md focus:ring-blue-500 sm:text-base px-3 py-2 ${
               errors.email
                 ? "border-red-300 focus:border-red-500"
                 : "border-gray-300 focus:border-blue-500"
             }`}
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
-          <div className="h-5 mt-1">
-            {errors.email && (
-              <p className="text-sm text-red-600">{errors.email}</p>
-            )}
-          </div>
         </div>
 
         {/* Phone */}
@@ -292,7 +290,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             value={formData.phone || ""}
             onChange={handleChange}
             placeholder="e.g., (555) 123-4567"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -309,17 +308,13 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             onChange={handleChange}
             placeholder="YYYY"
             maxLength={4}
-            className={`mt-1 block w-full rounded-md shadow-sm focus:ring-blue-500 sm:text-base px-3 py-2 ${
+            className={`mt-1 block w-full rounded-md focus:ring-blue-500 sm:text-base px-3 py-2 ${
               errors.graduationYear
                 ? "border-red-300 focus:border-red-500"
                 : "border-gray-300 focus:border-blue-500"
             }`}
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
-          <div className="h-5 mt-1">
-            {errors.graduationYear && (
-              <p className="text-sm text-red-600">{errors.graduationYear}</p>
-            )}
-          </div>
         </div>
 
         {/* High School */}
@@ -333,7 +328,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             name="highSchool"
             value={formData.highSchool || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -348,7 +344,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             name="club"
             value={formData.club || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -364,7 +361,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             value={formData.otherTeams || ""}
             onChange={handleChange}
             placeholder="e.g., Provincial team, National team"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -379,7 +377,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             name="residence"
             value={formData.residence || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -395,7 +394,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             value={formData.height || ""}
             onChange={handleChange}
             placeholder="e.g., 5'10&quot;"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -409,7 +409,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             name="primaryPosition"
             value={formData.primaryPosition || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           >
             <option value="">Select a position</option>
             {POSITION_OPTIONS.map((position) => (
@@ -430,7 +431,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             name="secondaryPosition"
             value={formData.secondaryPosition || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           >
             <option value="">Select a position</option>
             {POSITION_OPTIONS.map((position) => (
@@ -451,7 +453,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             name="dominantHand"
             value={formData.dominantHand || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           >
             <option value="">Select hand</option>
             <option value="Left">Left</option>
@@ -471,7 +474,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             value={formData.gpa || ""}
             onChange={handleChange}
             placeholder="e.g., 85%"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -487,7 +491,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             value={formData.standingTouch || ""}
             onChange={handleChange}
             placeholder="e.g., 9'2&quot;"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -503,7 +508,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             value={formData.spikeTouch || ""}
             onChange={handleChange}
             placeholder="e.g., 10'0&quot;"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -519,7 +525,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             value={formData.blockTouch || ""}
             onChange={handleChange}
             placeholder="e.g., 9'8&quot;"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -535,7 +542,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             value={formData.areaOfStudy || ""}
             onChange={handleChange}
             placeholder="e.g., Business, Engineering, Sciences"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
 
@@ -551,7 +559,8 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             onChange={handleChange}
             rows={3}
             placeholder="Describe your career goals and aspirations..."
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           />
         </div>
       </div>

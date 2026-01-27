@@ -284,7 +284,7 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
 
       {/* Add Video Form */}
       {videos.length < MAX_VIDEOS && (
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200" style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 8px 0 rgba(0, 0, 0, 0.15)' }}>
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Add Video</h3>
           <form onSubmit={handleAddVideo} className="space-y-4">
             <div>
@@ -301,11 +301,12 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
                 }}
                 placeholder="https://www.youtube.com/watch?v=..."
                 disabled={isEditing !== null}
-                className={`mt-1 block w-full rounded-md shadow-sm focus:ring-blue-500 sm:text-sm px-3 py-2 ${
+                className={`mt-1 block w-full rounded-md focus:ring-blue-500 sm:text-sm px-3 py-2 ${
                   urlError
                     ? "border-red-300 focus:border-red-500"
                     : "border-gray-300 focus:border-blue-500"
                 } ${isEditing !== null ? "bg-gray-100 cursor-not-allowed" : ""}`}
+                style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
                 required
               />
               <div className="h-5 mt-1">
@@ -325,7 +326,8 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
                 onChange={(e) => setVideoTitle(e.target.value)}
                 placeholder="Video title"
                 disabled={isEditing !== null}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2 ${isEditing !== null ? "bg-gray-100 cursor-not-allowed" : ""}`}
+                className={`mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2 ${isEditing !== null ? "bg-gray-100 cursor-not-allowed" : ""}`}
+                style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
               />
             </div>
             <div className="flex justify-end">
@@ -356,7 +358,7 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
           {videos.filter(v => !deletedVideoIds.has(v.id)).map((video, index) => (
             <div
               key={video.id}
-              className="bg-white border-2 rounded-lg p-3 border-gray-200 hover:border-gray-300 transition-all animate-in"
+              className="bg-white border-2 rounded-lg p-3 border-gray-200 hover:border-gray-300 transition-all animate-in shadow-lg"
             >
               {isEditing === video.id ? (
                 <EditVideoForm
@@ -454,11 +456,12 @@ function EditVideoForm({
             setUrl(e.target.value)
             setUrlError(null)
           }}
-          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-blue-500 sm:text-sm ${
+          className={`mt-1 block w-full rounded-md focus:ring-blue-500 sm:text-sm ${
             urlError
               ? "border-red-300 focus:border-red-500"
               : "border-gray-300 focus:border-blue-500"
           }`}
+          style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
           required
         />
         <div className="h-5 mt-1">
@@ -476,7 +479,8 @@ function EditVideoForm({
           id="editTitle"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+          style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
         />
       </div>
       <div className="flex justify-end gap-2">
