@@ -94,11 +94,11 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                     <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
                       {fullName || "Athlete Profile"}
                     </h1>
-                    <div className="space-y-0 text-lg sm:text-xl text-blue-100">
+                    <div className="text-lg sm:text-xl text-blue-100">
                       {infoItems.map((item, index) => (
                         <div
                           key={index}
-                          className={index < infoItems.length - 1 ? "pb-2 border-b border-blue-500/50" : "pt-2"}
+                          className="py-2 border-b border-blue-500/50 last:border-b-0"
                         >
                           {item}
                         </div>
@@ -114,11 +114,11 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                     </h1>
                   </div>
                   <div className="min-w-0">
-                    <div className="space-y-0 text-lg sm:text-xl text-blue-100">
+                    <div className="text-lg sm:text-xl text-blue-100">
                       {infoItems.map((item, index) => (
                         <div
                           key={index}
-                          className={index < infoItems.length - 1 ? "pb-2 border-b border-blue-500/50" : "pt-2"}
+                          className="py-2 border-b border-blue-500/50 last:border-b-0"
                         >
                           {item}
                         </div>
