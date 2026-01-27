@@ -47,7 +47,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
     if (!value || value.trim() === "") return null
 
     return (
-      <div className={`bg-gray-50 rounded-lg px-3 border border-gray-200 ${fullWidth ? "sm:col-span-2" : ""}`}>
+      <div className={`bg-gray-50 rounded-lg px-3 border border-gray-200 ${fullWidth ? "col-span-2" : ""}`}>
         <dt className="text-base font-semibold text-gray-700">{label}</dt>
         <dd className="text-lg text-gray-900 font-medium">{value}</dd>
       </div>
@@ -83,20 +83,20 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-8">
+      <div className="max-w-4xl mx-auto px-2 sm:px-6 py-2 sm:py-8">
         <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
           {/* Top Level Header - Athlete's Name */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-2 py-4 sm:px-6 sm:py-8">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-2 py-4 sm:px-6">
             <div className="flex items-center gap-4 sm:gap-6 justify-center">
               {profile.profileImageUrl ? (
                 <>
-                  <div className="relative flex-shrink-0">
+                  <div className="relative basis-1/3 min-w-[33%] flex justify-center">
                     <NextImage
                       src={profile.profileImageUrl}
                       alt={fullName || "Profile"}
-                      width={160}
-                      height={160}
-                      className="rounded-full object-cover border-4 border-white shadow-lg w-20 h-20 sm:w-40 sm:h-40"
+                      width={220}
+                      height={220}
+                      className="rounded-full object-cover border-4 border-white shadow-lg"
                       style={{ boxSizing: 'border-box' }}
                       unoptimized
                     />
@@ -188,13 +188,13 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 Athletic Profile
               </h2>
               <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
-                {renderField("Primary Position", profile.primaryPosition)}
-                {renderField("Secondary Position", profile.secondaryPosition)}
+                {renderField("Primary Position", profile.primaryPosition, true)}
+                {renderField("Secondary Position", profile.secondaryPosition, true)}
                 {renderField("Height", profile.height)}
                 {renderField("Standing Reach", profile.standingTouch)}
                 {renderField("Spike Touch", profile.spikeTouch)}
                 {renderField("Block Touch", profile.blockTouch)}
-                {renderField("Handedness", profile.dominantHand)}
+                {renderField("Handedness", profile.dominantHand, true)}
               </dl>
             </div>
           )}
@@ -223,7 +223,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 {renderField("Average Grade", profile.gpa)}
                 {renderField("Area of Study", profile.areaOfStudy)}
                 {profile.careerGoals && (
-                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 sm:col-span-2">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2">
                     <dt className="text-base font-semibold text-gray-700">Career Goals</dt>
                     <dd className="text-lg text-gray-900 font-medium whitespace-pre-line">{profile.careerGoals}</dd>
                   </div>
