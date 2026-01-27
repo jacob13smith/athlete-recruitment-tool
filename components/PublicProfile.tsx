@@ -22,6 +22,7 @@ interface Profile {
   club: string | null
   otherTeams: string | null
   residence: string | null
+  province: string | null
   height: string | null
   primaryPosition: string | null
   secondaryPosition: string | null
@@ -46,7 +47,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
     if (!value || value.trim() === "") return null
 
     return (
-      <div className={`bg-gray-50 rounded-lg px-3 border border-gray-200 ${fullWidth ? "col-span-2" : ""}`}>
+      <div className={`bg-gray-50 rounded-lg px-3 border border-gray-200 ${fullWidth ? "sm:col-span-2" : ""}`}>
         <dt className="text-base font-semibold text-gray-700">{label}</dt>
         <dd className="text-lg text-gray-900 font-medium">{value}</dd>
       </div>
@@ -61,11 +62,20 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
   const infoItems: string[] = []
   if (profile.primaryPosition) infoItems.push(profile.primaryPosition)
   if (profile.graduationYear) infoItems.push(`Class of ${profile.graduationYear}`)
-  if (profile.highSchool) infoItems.push(profile.highSchool)
-  if (profile.club) infoItems.push(profile.club)
+  // Third spot: City, Province
+  if (profile.residence || profile.province) {
+    const hometown = [profile.residence, profile.province].filter(Boolean).join(", ")
+    if (hometown) infoItems.push(hometown)
+  }
+  // Fourth spot: Club if exists, otherwise High School
+  if (profile.club) {
+    infoItems.push(profile.club)
+  } else if (profile.highSchool) {
+    infoItems.push(profile.highSchool)
+  }
 
   // Check if section has any content
-  const hasBasicInfo = profile.primaryPosition || profile.dominantHand || profile.height || profile.graduationYear
+  const hasBasicInfo = profile.primaryPosition || profile.dominantHand || profile.residence || profile.province || profile.graduationYear
   const hasAthleticProfile = profile.primaryPosition || profile.secondaryPosition || profile.dominantHand || profile.height || profile.standingTouch || profile.spikeTouch || profile.blockTouch
   const hasTeams = profile.highSchool || profile.club || profile.otherTeams
   const hasAcademics = profile.gpa || profile.areaOfStudy || profile.careerGoals
@@ -131,13 +141,20 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
             </div>
           </div>
 
-          {/* First Section: Basic Info (primary position, handedness, height, grad year) */}
+          {/* First Section: Basic Info (primary position, handedness, hometown, grad year) */}
           {hasBasicInfo && (
             <div className="px-2 py-2 sm:px-8 sm:py-6 border-b border-gray-200">
               <dl className="grid grid-cols-2 gap-x-1 gap-y-1 sm:gap-y-3">
-                {renderField("Primary Position", profile.primaryPosition, true)}
-                {renderField("Handedness", profile.dominantHand, true)}
-                {renderField("Height", profile.height)}
+                {renderField("Primary Position", profile.primaryPosition)}
+                {renderField("Handedness", profile.dominantHand)}
+                {(profile.residence || profile.province) && (
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
+                    <dt className="text-base font-semibold text-gray-700">Hometown</dt>
+                    <dd className="text-lg text-gray-900 font-medium">
+                      {[profile.residence, profile.province].filter(Boolean).join(", ")}
+                    </dd>
+                  </div>
+                )}
                 {renderField("Graduation Year", profile.graduationYear)}
               </dl>
             </div>
@@ -171,13 +188,13 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 Athletic Profile
               </h2>
               <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
-                {renderField("Primary Position", profile.primaryPosition, true)}
-                {renderField("Secondary Position", profile.secondaryPosition, true)}
+                {renderField("Primary Position", profile.primaryPosition)}
+                {renderField("Secondary Position", profile.secondaryPosition)}
                 {renderField("Height", profile.height)}
                 {renderField("Standing Reach", profile.standingTouch)}
                 {renderField("Spike Touch", profile.spikeTouch)}
                 {renderField("Block Touch", profile.blockTouch)}
-                {renderField("Handedness", profile.dominantHand, true)}
+                {renderField("Handedness", profile.dominantHand)}
               </dl>
             </div>
           )}
@@ -189,8 +206,8 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 Teams
               </h2>
               <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
-                {renderField("High School", profile.highSchool, true)}
-                {renderField("Club", profile.club, true)}
+                {renderField("High School", profile.highSchool)}
+                {renderField("Club", profile.club)}
                 {renderField("Other Teams", profile.otherTeams, true)}
               </dl>
             </div>
@@ -206,7 +223,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 {renderField("Average Grade", profile.gpa)}
                 {renderField("Area of Study", profile.areaOfStudy)}
                 {profile.careerGoals && (
-                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 sm:col-span-2">
                     <dt className="text-base font-semibold text-gray-700">Career Goals</dt>
                     <dd className="text-lg text-gray-900 font-medium whitespace-pre-line">{profile.careerGoals}</dd>
                   </div>
@@ -223,7 +240,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               </h2>
               <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
                 {profile.email && (
-                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
                     <dt className="text-base font-semibold text-gray-700">Email</dt>
                     <dd className="text-lg">
                       <a 
@@ -236,7 +253,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                   </div>
                 )}
                 {profile.phone && (
-                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
                     <dt className="text-base font-semibold text-gray-700">Phone</dt>
                     <dd className="text-lg">
                       <a 

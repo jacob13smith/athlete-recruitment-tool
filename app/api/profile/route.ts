@@ -106,6 +106,7 @@ export async function PUT(request: Request) {
       club?: string | null
       otherTeams?: string | null
       residence?: string | null
+      province?: string | null
       height?: string | null
       primaryPosition?: string | null
       secondaryPosition?: string | null
@@ -128,6 +129,7 @@ export async function PUT(request: Request) {
     if (data.club !== undefined) updateData.club = data.club === "" ? null : data.club
     if (data.otherTeams !== undefined) updateData.otherTeams = data.otherTeams === "" ? null : data.otherTeams
     if (data.residence !== undefined) updateData.residence = data.residence === "" ? null : data.residence
+    if (data.province !== undefined) updateData.province = data.province === "" ? null : data.province
     if (data.height !== undefined) updateData.height = data.height === "" ? null : data.height
     if (data.primaryPosition !== undefined) updateData.primaryPosition = data.primaryPosition === "" ? null : data.primaryPosition
     if (data.secondaryPosition !== undefined) updateData.secondaryPosition = data.secondaryPosition === "" ? null : data.secondaryPosition

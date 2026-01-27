@@ -25,6 +25,7 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
     club: "",
     otherTeams: "",
     residence: "",
+    province: "",
     height: "",
     primaryPosition: "",
     secondaryPosition: "",
@@ -65,6 +66,7 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
           club: data.club || "",
           otherTeams: data.otherTeams || "",
           residence: data.residence || "",
+          province: data.province || "",
           height: data.height || "",
           primaryPosition: data.primaryPosition || "",
           secondaryPosition: data.secondaryPosition || "",
@@ -161,6 +163,7 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
           club: savedData.club || "",
           otherTeams: savedData.otherTeams || "",
           residence: savedData.residence || "",
+          province: savedData.province || "",
           height: savedData.height || "",
           primaryPosition: savedData.primaryPosition || "",
           secondaryPosition: savedData.secondaryPosition || "",
@@ -391,6 +394,22 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
             id="residence"
             name="residence"
             value={formData.residence || ""}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
+            style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}
+          />
+        </div>
+
+        {/* Province */}
+        <div>
+          <label htmlFor="province" className="block text-base font-medium text-gray-700">
+            Province
+          </label>
+          <input
+            type="text"
+            id="province"
+            name="province"
+            value={formData.province || ""}
             onChange={handleChange}
             className="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-base px-3 py-2"
             style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.1)' }}

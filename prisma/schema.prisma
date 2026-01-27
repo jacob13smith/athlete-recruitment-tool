@@ -47,6 +47,7 @@ model Profile {
   club               String?
   otherTeams         String?  // free-text for additional teams
   residence          String?  // free-text city
+  province           String?  // province/state
   height             String?
   primaryPosition    String?  // enum: Setter, Outside Hitter, etc.
   secondaryPosition  String?  // enum: same options

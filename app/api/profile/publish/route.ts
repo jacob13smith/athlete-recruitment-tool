@@ -141,6 +141,7 @@ export async function POST() {
         club: user.draftProfile.club,
         otherTeams: user.draftProfile.otherTeams,
         residence: user.draftProfile.residence,
+        province: user.draftProfile.province,
         height: user.draftProfile.height,
         primaryPosition: user.draftProfile.primaryPosition,
         secondaryPosition: user.draftProfile.secondaryPosition,

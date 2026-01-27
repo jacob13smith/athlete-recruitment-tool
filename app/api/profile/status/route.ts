@@ -66,6 +66,7 @@ export async function GET() {
       "club",
       "otherTeams",
       "residence",
+      "province",
       "height",
       "primaryPosition",
       "secondaryPosition",

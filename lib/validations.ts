@@ -27,6 +27,7 @@ export const profileSchema = z.object({
   club: z.string().optional(),
   otherTeams: z.string().optional(),
   residence: z.string().optional(),
+  province: z.string().optional(),
   height: z.string().optional(),
   primaryPosition: z.enum(POSITION_OPTIONS as unknown as [string, ...string[]]).optional().or(z.literal("")),
   secondaryPosition: z.enum(POSITION_OPTIONS as unknown as [string, ...string[]]).optional().or(z.literal("")),
