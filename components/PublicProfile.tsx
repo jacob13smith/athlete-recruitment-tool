@@ -1,6 +1,7 @@
 "use client"
 
 import VideoEmbed from "./VideoEmbed"
+import { formatPhoneNumber } from "@/lib/utils"
 
 interface Video {
   id: string
@@ -72,14 +73,14 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
             </h1>
           </div>
 
-          {/* First Section: Basic Info (primary position, height, grad year, home city) */}
+          {/* First Section: Basic Info (home city, primary position, height, grad year) */}
           {hasBasicInfo && (
             <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+                {renderField("Home City", profile.residence)}
                 {renderField("Primary Position", profile.primaryPosition)}
                 {renderField("Height", profile.height)}
                 {renderField("Graduation Year", profile.graduationYear)}
-                {renderField("Home City", profile.residence)}
               </dl>
             </div>
           )}
@@ -88,7 +89,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
           {profile.videos && profile.videos.length > 0 && (
             <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
               <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-                Videos
+                Gameplay
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {profile.videos.map((video) => (
@@ -114,11 +115,11 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
                 {renderField("Primary Position", profile.primaryPosition)}
                 {renderField("Secondary Position", profile.secondaryPosition)}
-                {/* Note: Dominant hand and block touch not in schema */}
                 {renderField("Height", profile.height)}
                 {renderField("Standing Reach", profile.standingTouch)}
                 {renderField("Spike Touch", profile.spikeTouch)}
-                {/* Note: Block touch not in schema - using spikeTouch for now */}
+                {renderField("Block Touch", profile.blockTouch)}
+                {renderField("Dominant Hand", profile.dominantHand)}
               </dl>
             </div>
           )}
@@ -178,7 +179,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                         href={`tel:${profile.phone}`}
                         className="text-blue-600 hover:text-blue-800 hover:underline"
                       >
-                        {profile.phone}
+                        {formatPhoneNumber(profile.phone)}
                       </a>
                     </dd>
                   </div>
