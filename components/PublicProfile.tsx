@@ -56,7 +56,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
     .join(" ")
 
   // Check if section has any content
-  const hasBasicInfo = profile.primaryPosition || profile.height || profile.graduationYear || profile.residence
+  const hasBasicInfo = profile.primaryPosition || profile.dominantHand || profile.height || profile.graduationYear
   const hasAthleticProfile = profile.primaryPosition || profile.secondaryPosition || profile.dominantHand || profile.height || profile.standingTouch || profile.spikeTouch || profile.blockTouch
   const hasTeams = profile.highSchool || profile.club || profile.otherTeams
   const hasAcademics = profile.gpa || profile.areaOfStudy || profile.careerGoals
@@ -73,12 +73,12 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
             </h1>
           </div>
 
-          {/* First Section: Basic Info (home city, primary position, height, grad year) */}
+          {/* First Section: Basic Info (primary position, handedness, height, grad year) */}
           {hasBasicInfo && (
             <div className="px-6 py-6 sm:px-8 border-b border-gray-200">
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
-                {renderField("Home City", profile.residence)}
                 {renderField("Primary Position", profile.primaryPosition)}
+                {renderField("Handedness", profile.dominantHand)}
                 {renderField("Height", profile.height)}
                 {renderField("Graduation Year", profile.graduationYear)}
               </dl>
