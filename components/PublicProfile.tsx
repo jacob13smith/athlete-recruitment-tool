@@ -45,8 +45,8 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
     return (
       <div className="py-2">
-        <dt className="text-sm font-medium text-gray-500">{label}</dt>
-        <dd className="mt-1 text-base text-gray-900">{value}</dd>
+        <dt className="text-base font-semibold text-gray-700">{label}</dt>
+        <dd className="mt-1 text-lg text-gray-900 font-medium">{value}</dd>
       </div>
     )
   }
@@ -149,8 +149,8 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 {renderField("Area of Study", profile.areaOfStudy)}
                 {profile.careerGoals && (
                   <div className="py-2 sm:col-span-2">
-                    <dt className="text-sm font-medium text-gray-500">Career Goals</dt>
-                    <dd className="mt-1 text-base text-gray-900 whitespace-pre-line">{profile.careerGoals}</dd>
+                    <dt className="text-base font-semibold text-gray-700">Career Goals</dt>
+                    <dd className="mt-1 text-lg text-gray-900 font-medium whitespace-pre-line">{profile.careerGoals}</dd>
                   </div>
                 )}
               </dl>
@@ -166,11 +166,11 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
                 {profile.email && (
                   <div className="py-2">
-                    <dt className="text-sm font-medium text-gray-500">Email</dt>
-                    <dd className="mt-1 text-base">
+                    <dt className="text-base font-semibold text-gray-700">Email</dt>
+                    <dd className="mt-1 text-lg">
                       <a 
                         href={`mailto:${profile.email}`}
-                        className="text-blue-600 hover:text-blue-800 hover:underline"
+                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
                       >
                         {profile.email}
                       </a>
@@ -179,11 +179,11 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 )}
                 {profile.phone && (
                   <div className="py-2">
-                    <dt className="text-sm font-medium text-gray-500">Phone</dt>
-                    <dd className="mt-1 text-base">
+                    <dt className="text-base font-semibold text-gray-700">Phone</dt>
+                    <dd className="mt-1 text-lg">
                       <a 
                         href={`tel:${profile.phone}`}
-                        className="text-blue-600 hover:text-blue-800 hover:underline"
+                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
                       >
                         {formatPhoneNumber(profile.phone)}
                       </a>
