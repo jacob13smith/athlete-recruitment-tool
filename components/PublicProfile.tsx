@@ -3,11 +3,6 @@
 import VideoEmbed from "./VideoEmbed"
 import { formatPhoneNumber } from "@/lib/utils"
 import NextImage from "next/image"
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 
 interface Video {
   id: string
@@ -171,32 +166,24 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-6">
                 Gameplay
               </h2>
-              <Swiper
-                modules={[Navigation, Pagination]}
-                spaceBetween={24}
-                slidesPerView={1}
-                breakpoints={{
-                  640: {
-                    slidesPerView: 2,
-                  },
-                }}
-                navigation
-                pagination={{ clickable: true }}
-                className="!pb-12"
-              >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {profile.videos.map((video) => (
-                  <SwiperSlide key={video.id}>
-                    <div className="bg-white rounded-lg p-3 sm:p-4 h-full" style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2)' }}>
-                      {video.title && (
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2 sm:mb-3">
-                          {video.title}
-                        </h3>
-                      )}
-                      <VideoEmbed url={video.url} title={video.title} />
-                    </div>
-                  </SwiperSlide>
+                  <div 
+                    key={video.id}
+                    className="bg-white rounded-lg p-3 sm:p-4 h-full" 
+                    style={{ 
+                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2)'
+                    }}
+                  >
+                    {video.title && (
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 sm:mb-3">
+                        {video.title}
+                      </h3>
+                    )}
+                    <VideoEmbed url={video.url} title={video.title} />
+                  </div>
                 ))}
-              </Swiper>
+              </div>
             </div>
           )}
 
