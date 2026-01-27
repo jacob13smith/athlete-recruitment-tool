@@ -48,7 +48,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
     return (
       <div className={`bg-gray-50 rounded-lg px-3 border border-gray-200 ${fullWidth ? "col-span-2" : ""}`}>
-        <dt className="text-base font-semibold text-gray-700">{label}</dt>
+        <dt className="text-base font-semibold text-gray-500">{label}</dt>
         <dd className="text-lg text-gray-900 font-medium">{value}</dd>
       </div>
     )
@@ -149,7 +149,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 {renderField("Handedness", profile.dominantHand)}
                 {(profile.residence || profile.province) && (
                   <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
-                    <dt className="text-base font-semibold text-gray-700">Hometown</dt>
+                    <dt className="text-base font-semibold text-gray-500">Hometown</dt>
                     <dd className="text-lg text-gray-900 font-medium">
                       {[profile.residence, profile.province].filter(Boolean).join(", ")}
                     </dd>
@@ -230,7 +230,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 {renderField("Area of Study", profile.areaOfStudy)}
                 {profile.careerGoals && (
                   <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2">
-                    <dt className="text-base font-semibold text-gray-700">Career Goals</dt>
+                    <dt className="text-base font-semibold text-gray-500">Career Goals</dt>
                     <dd className="text-lg text-gray-900 font-medium whitespace-pre-line">{profile.careerGoals}</dd>
                   </div>
                 )}
@@ -247,7 +247,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
                 {profile.email && (
                   <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2 sm:col-span-1">
-                    <dt className="text-base font-semibold text-gray-700">Email</dt>
+                    <dt className="text-base font-semibold text-gray-500">Email</dt>
                     <dd className="text-lg">
                       <a 
                         href={`mailto:${profile.email}`}
@@ -260,7 +260,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                 )}
                 {profile.phone && (
                   <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2 sm:col-span-1">
-                    <dt className="text-base font-semibold text-gray-700">Phone</dt>
+                    <dt className="text-base font-semibold text-gray-500">Phone</dt>
                     <dd className="text-lg">
                       <a 
                         href={`tel:${profile.phone}`}
