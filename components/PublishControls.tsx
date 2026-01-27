@@ -145,10 +145,10 @@ const PublishControls = forwardRef<PublishControlsRef, PublishControlsProps>(
               href={`/athlete/${status.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-blue-600 hover:text-blue-800 underline mt-1 block flex items-center gap-1 break-all"
+              className="text-lg font-medium text-blue-600 hover:text-blue-800 underline mt-2 block flex items-center gap-2 break-all"
             >
               <span className="break-words">{typeof window !== "undefined" ? window.location.origin : ""}/athlete/{status.slug}</span>
-              <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </a>
