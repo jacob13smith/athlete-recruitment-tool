@@ -42,11 +42,11 @@ interface PublicProfileProps {
 
 export default function PublicProfile({ profile }: PublicProfileProps) {
   // Helper function to render a field if it has a value
-  const renderField = (label: string, value: string | null | undefined) => {
+  const renderField = (label: string, value: string | null | undefined, fullWidth: boolean = false) => {
     if (!value || value.trim() === "") return null
 
     return (
-      <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
+      <div className={`bg-gray-50 rounded-lg px-3 border border-gray-200 ${fullWidth ? "col-span-2" : ""}`}>
         <dt className="text-base font-semibold text-gray-700">{label}</dt>
         <dd className="text-lg text-gray-900 font-medium">{value}</dd>
       </div>
@@ -76,7 +76,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
       <div className="max-w-4xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-8">
         <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
           {/* Top Level Header - Athlete's Name */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-4 sm:px-6 sm:py-8">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-2 py-4 sm:px-6 sm:py-8">
             <div className="flex items-center gap-4 sm:gap-6 justify-center">
               {profile.profileImageUrl ? (
                 <>
@@ -134,9 +134,9 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
           {/* First Section: Basic Info (primary position, handedness, height, grad year) */}
           {hasBasicInfo && (
             <div className="px-2 py-2 sm:px-8 sm:py-6 border-b border-gray-200">
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 sm:gap-y-3">
-                {renderField("Primary Position", profile.primaryPosition)}
-                {renderField("Handedness", profile.dominantHand)}
+              <dl className="grid grid-cols-2 gap-x-1 gap-y-1 sm:gap-y-3">
+                {renderField("Primary Position", profile.primaryPosition, true)}
+                {renderField("Handedness", profile.dominantHand, true)}
                 {renderField("Height", profile.height)}
                 {renderField("Graduation Year", profile.graduationYear)}
               </dl>
@@ -170,14 +170,14 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Athletic Profile
               </h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 sm:gap-y-3">
-                {renderField("Primary Position", profile.primaryPosition)}
-                {renderField("Secondary Position", profile.secondaryPosition)}
+              <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
+                {renderField("Primary Position", profile.primaryPosition, true)}
+                {renderField("Secondary Position", profile.secondaryPosition, true)}
                 {renderField("Height", profile.height)}
                 {renderField("Standing Reach", profile.standingTouch)}
                 {renderField("Spike Touch", profile.spikeTouch)}
                 {renderField("Block Touch", profile.blockTouch)}
-                {renderField("Handedness", profile.dominantHand)}
+                {renderField("Handedness", profile.dominantHand, true)}
               </dl>
             </div>
           )}
@@ -188,10 +188,10 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Teams
               </h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 sm:gap-y-3">
-                {renderField("High School", profile.highSchool)}
-                {renderField("Club", profile.club)}
-                {renderField("Other Teams", profile.otherTeams)}
+              <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
+                {renderField("High School", profile.highSchool, true)}
+                {renderField("Club", profile.club, true)}
+                {renderField("Other Teams", profile.otherTeams, true)}
               </dl>
             </div>
           )}
@@ -202,11 +202,11 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Academics
               </h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 sm:gap-y-3">
+              <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
                 {renderField("Average Grade", profile.gpa)}
                 {renderField("Area of Study", profile.areaOfStudy)}
                 {profile.careerGoals && (
-                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 sm:col-span-2">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2">
                     <dt className="text-base font-semibold text-gray-700">Career Goals</dt>
                     <dd className="text-lg text-gray-900 font-medium whitespace-pre-line">{profile.careerGoals}</dd>
                   </div>
@@ -221,9 +221,9 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Contact
               </h2>
-              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 sm:gap-y-3">
+              <dl className="grid grid-cols-2 gap-x-1 gap-y-2 sm:gap-y-3">
                 {profile.email && (
-                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2">
                     <dt className="text-base font-semibold text-gray-700">Email</dt>
                     <dd className="text-lg">
                       <a 
@@ -236,7 +236,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                   </div>
                 )}
                 {profile.phone && (
-                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200">
+                  <div className="bg-gray-50 rounded-lg px-3 border border-gray-200 col-span-2">
                     <dt className="text-base font-semibold text-gray-700">Phone</dt>
                     <dd className="text-lg">
                       <a 
