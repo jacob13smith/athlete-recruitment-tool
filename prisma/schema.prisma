@@ -16,7 +16,7 @@ model User {
   password  String   // hashed with bcryptjs
   
   // PUBLISHING METADATA (stored on User)
-  slug            String? @unique  // UUIDv4, generated on first publish
+  slug            String? @unique  // Name-based slug (e.g., "john-doe"), generated on first publish, updates if name changes
   isPublished     Boolean @default(false)
   publishedAt     DateTime?
   

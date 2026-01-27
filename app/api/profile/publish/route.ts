@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
-import { generateUUID } from "@/lib/uuid-utils"
+import { generateUUID, generateShortId, slugify } from "@/lib/uuid-utils"
 import { NextResponse } from "next/server"
 
 // Prevent static analysis during build
@@ -41,10 +41,83 @@ export async function POST() {
       )
     }
 
-    // Generate slug on first publish (if user.slug is null)
+    // Generate or update slug based on name
+    const firstName = user.draftProfile.firstName || ""
+    const lastName = user.draftProfile.lastName || ""
+    const nameSlug = slugify(`${firstName} ${lastName}`.trim())
+    
     let slug = user.slug
-    if (!slug) {
-      slug = generateUUID()
+    
+    // Check if we need to generate/update slug
+    if (!slug || !nameSlug) {
+      // First publish or no name - generate slug
+      if (nameSlug) {
+        // Generate slug from name: firstName-lastName
+        let baseSlug = nameSlug
+        let attempts = 0
+        const maxAttempts = 10
+        
+        while (attempts < maxAttempts) {
+          const existingUser = await db.user.findUnique({
+            where: { slug: baseSlug },
+            select: { id: true }, // Only check if it exists, ignore if it's the current user
+          })
+          
+          // If slug doesn't exist, or it's the current user's slug, use it
+          if (!existingUser || existingUser.id === user.id) {
+            slug = baseSlug
+            break
+          }
+          
+          // Slug exists for another user, append short ID
+          const shortId = generateShortId()
+          baseSlug = `${nameSlug}-${shortId}`
+          attempts++
+        }
+        
+        // Fallback to UUID if we couldn't generate a unique name-based slug
+        if (!slug) {
+          slug = generateUUID()
+        }
+      } else {
+        // No name available, use UUID
+        slug = generateUUID()
+      }
+      } else {
+        // User has existing slug - check if name changed
+        const oldFirstName = user.publishedProfile?.firstName || ""
+        const oldLastName = user.publishedProfile?.lastName || ""
+        const oldNameSlug = slugify(`${oldFirstName} ${oldLastName}`.trim())
+        
+        // If name changed, regenerate slug
+        if (nameSlug !== oldNameSlug && nameSlug) {
+        let baseSlug = nameSlug
+        let attempts = 0
+        const maxAttempts = 10
+        
+        while (attempts < maxAttempts) {
+          const existingUser = await db.user.findUnique({
+            where: { slug: baseSlug },
+            select: { id: true },
+          })
+          
+          // If slug doesn't exist, or it's the current user's slug, use it
+          if (!existingUser || existingUser.id === user.id) {
+            slug = baseSlug
+            break
+          }
+          
+          // Slug exists for another user, append short ID
+          const shortId = generateShortId()
+          baseSlug = `${nameSlug}-${shortId}`
+          attempts++
+        }
+        
+        // Fallback: keep old slug if we can't generate a new unique one
+        if (!slug) {
+          slug = user.slug || generateUUID()
+        }
+      }
     }
 
     // Store old published profile ID before we update

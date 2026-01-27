@@ -18,3 +18,32 @@ export function generateUUID(): string {
     return v.toString(16)
   })
 }
+
+/**
+ * Generates a short unique identifier (6 characters)
+ * Used for appending to slugs when duplicates exist
+ */
+export function generateShortId(): string {
+  const chars = "abcdefghijklmnopqrstuvwxyz0123456789"
+  let result = ""
+  for (let i = 0; i < 6; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  return result
+}
+
+/**
+ * Converts a string to a URL-friendly slug
+ * Removes special characters, converts to lowercase, replaces spaces with hyphens
+ */
+export function slugify(text: string | null | undefined): string {
+  if (!text) return ""
+  
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "") // Remove special characters
+    .replace(/[\s_-]+/g, "-") // Replace spaces and underscores with hyphens
+    .replace(/^-+|-+$/g, "") // Remove leading/trailing hyphens
+}
