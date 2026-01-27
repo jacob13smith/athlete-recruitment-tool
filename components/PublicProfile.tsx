@@ -250,6 +250,19 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
               </dl>
             </div>
           )}
+
+          {/* Powered by RecruitMe */}
+          <div className="px-6 py-4 sm:px-8 border-t border-gray-200 bg-gray-50">
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-sm text-gray-500">Powered by</span>
+              <a
+                href="/"
+                className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+              >
+                RecruitMe
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
