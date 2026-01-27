@@ -97,7 +97,7 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
                       alt={fullName || "Profile"}
                       width={220}
                       height={220}
-                      className="rounded-full object-cover border-4 border-white shadow-lg"
+                      className="rounded-full object-cover border-4 border-white/50 shadow-lg"
                       style={{ boxSizing: 'border-box' }}
                       unoptimized
                     />
