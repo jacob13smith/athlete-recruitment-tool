@@ -7,6 +7,14 @@ const nextConfig = {
       bodySizeLimit: '2mb',
     },
   },
+  webpack: (config) => {
+    config.ignoreWarnings = [
+      ...(config.ignoreWarnings || []),
+      { module: /@opentelemetry\/instrumentation/ },
+      { module: /require-in-the-middle/ },
+    ]
+    return config
+  },
 };
 
 // Only wrap with Sentry if DSN is provided

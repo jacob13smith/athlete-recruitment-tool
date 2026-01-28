@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import LogoutButton from "@/components/LogoutButton"
 import DashboardClient from "@/components/DashboardClient"
+import DashboardOnboarding from "@/components/DashboardOnboarding"
 
 export default async function DashboardPage() {
   const session = await auth()
@@ -16,9 +17,10 @@ export default async function DashboardPage() {
         <div className="bg-white shadow-2xl rounded-lg p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-6">
             <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <div className="flex items-center w-full sm:w-auto justify-evenly sm:justify-start sm:gap-3 sm:flex-shrink-0">
+            <div className="flex items-center w-full sm:w-auto justify-end gap-3 sm:flex-shrink-0">
               <a
                 href="/dashboard/settings"
+                data-onboarding="settings"
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-colors"
               >
                 Settings
@@ -40,6 +42,7 @@ export default async function DashboardPage() {
             </div>
           </div>
 
+          <DashboardOnboarding />
           <DashboardClient />
         </div>
       </div>

@@ -87,7 +87,7 @@ export default function DashboardClient() {
     <>
       <div className="space-y-8 pb-24">
         {/* Athlete Information Section */}
-        <div>
+        <div data-onboarding="athlete-info">
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
             Athlete Information
           </h2>
@@ -105,7 +105,7 @@ export default function DashboardClient() {
         </div>
 
             {/* Videos Section */}
-            <div className="pt-8 border-t border-gray-200">
+            <div className="pt-8 border-t border-gray-200" data-onboarding="videos">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 Videos
               </h2>
@@ -116,7 +116,7 @@ export default function DashboardClient() {
             </div>
 
             {/* Publish Status Section */}
-            <div className="pt-8 border-t border-gray-200">
+            <div className="pt-8 border-t border-gray-200" data-onboarding="publish-status">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 Publish Status
               </h2>
@@ -125,7 +125,7 @@ export default function DashboardClient() {
           </div>
 
       {/* Sticky Footer with Save Draft Button */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50 safe-area-inset-bottom">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50 safe-area-inset-bottom" data-onboarding="save-footer">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex justify-end">
             <button

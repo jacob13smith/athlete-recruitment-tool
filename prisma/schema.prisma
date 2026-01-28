@@ -19,6 +19,9 @@ model User {
   slug            String? @unique  // Name-based slug (e.g., "john-doe"), generated on first publish, updates if name changes
   isPublished     Boolean @default(false)
   publishedAt     DateTime?
+
+  // ONBOARDING
+  hasCompletedOnboarding Boolean @default(false)
   
   // RELATIONS (optional - user may not have profiles yet)
   draftProfileId     String? @unique

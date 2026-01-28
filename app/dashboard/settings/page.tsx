@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"
 import Link from "next/link"
+import { setReplayOnboarding } from "@/lib/onboarding-tour"
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -69,6 +70,24 @@ export default function SettingsPage() {
           </div>
 
           <div className="space-y-8">
+            <section>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Onboarding</h2>
+              <div className="border border-gray-200 rounded-lg p-6 bg-gray-50">
+                <p className="text-gray-700 mb-4">
+                  Run the dashboard tour again to see how Athlete Information, Videos, Publish Status, and Save Changes work.
+                </p>
+                <button
+                  onClick={() => {
+                    setReplayOnboarding()
+                    router.push("/dashboard")
+                  }}
+                  className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                >
+                  Replay onboarding
+                </button>
+              </div>
+            </section>
+
             <section>
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Danger Zone</h2>
               <div className="border border-red-200 rounded-lg p-6 bg-red-50">
