@@ -244,7 +244,7 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
         }}
       />
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {/* First Name */}
         <div>
           <label htmlFor="firstName" className="block text-base font-medium text-gray-700">
