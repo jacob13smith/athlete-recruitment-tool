@@ -1,9 +1,37 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { hasAuthSession } from "@/lib/auth-middleware"
+import { loginLimiter, getClientIp, checkRateLimit } from "@/lib/ratelimit"
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // Rate limit authentication endpoints (POST requests only)
+  if (request.method === "POST" && pathname.startsWith("/api/auth/")) {
+    // Skip rate limiting for signup and forgot-password (handled in their route handlers)
+    if (pathname === "/api/auth/signup" || pathname === "/api/auth/forgot-password") {
+      return NextResponse.next()
+    }
+    
+    // Rate limit login attempts (NextAuth routes)
+    const ip = getClientIp(request)
+    const rateLimitResult = await checkRateLimit(`login:${ip}`, loginLimiter)
+    
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { 
+          error: "Too many login attempts. Please try again later.",
+          retryAfter: rateLimitResult.reset ? Math.ceil((rateLimitResult.reset - Date.now()) / 1000) : undefined
+        },
+        { 
+          status: 429,
+          headers: {
+            "Retry-After": rateLimitResult.reset ? Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString() : "900",
+          }
+        }
+      )
+    }
+  }
 
   // Allow public access to athlete profile pages
   if (pathname.startsWith("/athlete/")) {
@@ -32,11 +60,13 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * 
+     * Also match /api/auth/* for rate limiting
      */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!_next/static|_next/image|favicon.ico).*)",
+    "/api/auth/:path*",
   ],
 }

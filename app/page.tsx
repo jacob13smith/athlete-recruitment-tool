@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import LoginForm from "@/components/LoginForm"
 import SignupForm from "@/components/SignupForm"
+import LoadingSpinner from "@/components/LoadingSpinner"
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -22,7 +23,7 @@ export default function Home() {
   if (status === "loading") {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-        <div className="text-gray-500">Loading...</div>
+        <LoadingSpinner size="lg" />
       </main>
     )
   }
@@ -54,6 +55,22 @@ export default function Home() {
           ) : (
             <LoginForm onToggle={() => setIsSignup(true)} />
           )}
+        </div>
+        
+        <div className="flex items-center justify-center gap-4 text-xs text-gray-500 mt-6">
+          <a
+            href="/terms"
+            className="hover:text-gray-700 transition-colors"
+          >
+            Terms of Service
+          </a>
+          <span>•</span>
+          <a
+            href="/privacy"
+            className="hover:text-gray-700 transition-colors"
+          >
+            Privacy Policy
+          </a>
         </div>
       </div>
     </main>

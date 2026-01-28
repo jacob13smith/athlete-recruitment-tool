@@ -3,6 +3,7 @@
 import { useState, useEffect, useImperativeHandle, forwardRef } from "react"
 import PublishModal from "./PublishModal"
 import { toast } from "sonner"
+import LoadingSpinner from "./LoadingSpinner"
 
 interface PublishStatus {
   hasUnpublishedChanges: boolean
@@ -116,7 +117,9 @@ const PublishControls = forwardRef<PublishControlsRef, PublishControlsProps>(
 
   if (isLoading) {
     return (
-      <div className="text-sm text-gray-500 min-h-[60px] flex items-center">Loading publish status...</div>
+      <div className="min-h-[60px] flex items-center">
+        <LoadingSpinner label="Loading publish status..." size="sm" inline />
+      </div>
     )
   }
 

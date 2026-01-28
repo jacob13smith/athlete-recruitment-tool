@@ -50,3 +50,19 @@ npm run dev
 ---
 
 **Note:** The app will be available at http://localhost:3000 once the dev server starts.
+
+## Troubleshooting
+
+### "The table `password_reset_tokens` does not exist"
+
+The schema was updated with a `PasswordResetToken` model for forgot-password flow. Sync the database:
+
+```bash
+npm run db:push
+```
+
+Or, if you use Prisma Migrate:
+
+```bash
+npm run db:migrate
+```

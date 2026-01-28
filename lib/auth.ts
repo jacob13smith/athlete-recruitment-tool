@@ -61,13 +61,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   session: {
     strategy: "jwt",
+    // Safe session lifetime; token invalidated after maxAge unless refreshed
+    maxAge: parseInt(process.env.SESSION_MAX_AGE ?? "604800", 10), // default 7 days
+    // Rolling: if user is active, token is refreshed every updateAge seconds
+    updateAge: parseInt(process.env.SESSION_UPDATE_AGE ?? "86400", 10), // default 24 hours
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id
         token.email = user.email
       }
+      // On trigger === "update" (rolling refresh), preserve token; Auth.js handles iat/exp
       return token
     },
     async session({ session, token }) {

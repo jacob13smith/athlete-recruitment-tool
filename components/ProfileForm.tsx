@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { POSITION_OPTIONS, type ProfileFormData } from "@/lib/validations"
 import { toast } from "sonner"
 import ProfileImageUpload from "./ProfileImageUpload"
+import LoadingSpinner from "./LoadingSpinner"
 
 interface ProfileFormProps {
   initialData?: Partial<ProfileFormData> | null
@@ -225,7 +226,7 @@ export default function ProfileForm({ initialData, formRef: externalFormRef, onS
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <div className="text-gray-500">Loading profile...</div>
+        <LoadingSpinner label="Loading profile..." size="md" />
       </div>
     )
   }

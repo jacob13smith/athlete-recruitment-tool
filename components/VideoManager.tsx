@@ -4,6 +4,7 @@ import { useState, useEffect, useImperativeHandle, forwardRef, useCallback } fro
 import { validateYouTubeUrl, extractYouTubeVideoId } from "@/lib/youtube-utils"
 import VideoEmbed from "./VideoEmbed"
 import { toast } from "sonner"
+import LoadingSpinner from "./LoadingSpinner"
 
 interface Video {
   id: string
@@ -273,7 +274,7 @@ const VideoManager = forwardRef<VideoManagerRef, VideoManagerProps>(
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-12 min-h-[400px]">
-        <div className="text-gray-500">Loading videos...</div>
+        <LoadingSpinner label="Loading videos..." size="md" />
       </div>
     )
   }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { hashPassword } from "@/lib/utils"
 import { z } from "zod"
+import { signupLimiter, getClientIp, checkRateLimit } from "@/lib/ratelimit"
 
 // Prevent static analysis during build
 export const dynamic = 'force-dynamic'
@@ -19,6 +20,25 @@ const signupSchema = z.object({
 })
 
 export async function POST(request: NextRequest) {
+  // Rate limiting
+  const ip = getClientIp(request)
+  const rateLimitResult = await checkRateLimit(`signup:${ip}`, signupLimiter)
+  
+  if (!rateLimitResult.success) {
+    return NextResponse.json(
+      { 
+        error: "Too many signup attempts. Please try again later.",
+        retryAfter: rateLimitResult.reset ? Math.ceil((rateLimitResult.reset - Date.now()) / 1000) : undefined
+      },
+      { 
+        status: 429,
+        headers: {
+          "Retry-After": rateLimitResult.reset ? Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString() : "900",
+        }
+      }
+    )
+  }
+
   try {
     const body = await request.json()
     const parsedData = signupSchema.safeParse(body)

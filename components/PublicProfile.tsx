@@ -278,14 +278,31 @@ export default function PublicProfile({ profile }: PublicProfileProps) {
 
           {/* Powered by RecruitMe */}
           <div className="px-4 py-3 sm:px-8 sm:py-4 border-t border-gray-200 bg-gray-50">
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-sm text-gray-500">Powered by</span>
-              <a
-                href="/"
-                className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
-              >
-                RecruitMe
-              </a>
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-sm text-gray-500">Powered by</span>
+                <a
+                  href="/"
+                  className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+                >
+                  RecruitMe
+                </a>
+              </div>
+              <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
+                <a
+                  href="/terms"
+                  className="hover:text-gray-700 transition-colors"
+                >
+                  Terms of Service
+                </a>
+                <span>•</span>
+                <a
+                  href="/privacy"
+                  className="hover:text-gray-700 transition-colors"
+                >
+                  Privacy Policy
+                </a>
+              </div>
             </div>
           </div>
         </div>
