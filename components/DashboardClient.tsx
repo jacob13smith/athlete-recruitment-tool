@@ -50,7 +50,7 @@ export default function DashboardClient() {
     }
   }, [hasChanges])
 
-  const handleSaveDraft = async () => {
+  const handleSaveDraft = useCallback(async () => {
     setIsSaving(true)
     
     try {
@@ -75,13 +75,26 @@ export default function DashboardClient() {
     } finally {
       setIsSaving(false)
     }
-  }
+  }, [hasProfileChanges, hasVideoChanges])
 
   // Refresh publish status after save (to update hasUnpublishedChanges)
   const handlePublishRefresh = async () => {
     // PublishControls handles its own refresh after publish/unpublish
     // This callback is kept for potential future use
   }
+
+  // Ctrl/Cmd+S to save
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault()
+        if (hasChanges && !isSaving) handleSaveDraft()
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [hasChanges, isSaving, handleSaveDraft])
 
   return (
     <>
