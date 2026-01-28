@@ -45,6 +45,26 @@ export default async function DashboardPage() {
           <DashboardOnboarding />
           <DashboardClient />
         </div>
+
+        {/* Footer - appears after scrolling past sticky Save Changes bar */}
+        <footer className="mt-8 pb-16 flex flex-col items-center gap-2 text-xs text-gray-500">
+          <div className="flex items-center justify-center gap-4">
+            <a
+              href="/terms"
+              className="hover:text-gray-700 transition-colors"
+            >
+              Terms of Service
+            </a>
+            <span>•</span>
+            <a
+              href="/privacy"
+              className="hover:text-gray-700 transition-colors"
+            >
+              Privacy Policy
+            </a>
+          </div>
+          <p>Powered by RecruitMe</p>
+        </footer>
       </div>
     </div>
   )
