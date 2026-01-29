@@ -8,8 +8,13 @@ export async function middleware(request: NextRequest) {
 
   // Rate limit authentication endpoints (POST requests only)
   if (request.method === "POST" && pathname.startsWith("/api/auth/")) {
-    // Skip rate limiting for signup and forgot-password (handled in their route handlers)
-    if (pathname === "/api/auth/signup" || pathname === "/api/auth/forgot-password") {
+    // Skip rate limiting for these (handled in route handlers or one-time use)
+    if (
+      pathname === "/api/auth/signup" ||
+      pathname === "/api/auth/forgot-password" ||
+      pathname === "/api/auth/verify-email" ||
+      pathname === "/api/auth/resend-verification"
+    ) {
       return NextResponse.next()
     }
     

@@ -22,6 +22,9 @@ model User {
 
   // ONBOARDING
   hasCompletedOnboarding Boolean @default(false)
+
+  // EMAIL VERIFICATION (required to publish)
+  emailVerified Boolean @default(false)
   
   // RELATIONS (optional - user may not have profiles yet)
   draftProfileId     String? @unique
@@ -34,7 +37,8 @@ model User {
   updatedAt DateTime @updatedAt
   
   // Relations
-  passwordResetTokens PasswordResetToken[]
+  passwordResetTokens     PasswordResetToken[]
+  emailVerificationTokens EmailVerificationToken[]
   
   @@map("users")
 }
@@ -110,6 +114,22 @@ model PasswordResetToken {
   createdAt DateTime @default(now())
   
   @@map("password_reset_tokens")
+  @@index([token])
+  @@index([userId])
+}
+
+// Email verification tokens (verify-email link)
+model EmailVerificationToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  
+  createdAt DateTime  @default(now())
+  
+  @@map("email_verification_tokens")
   @@index([token])
   @@index([userId])
 }

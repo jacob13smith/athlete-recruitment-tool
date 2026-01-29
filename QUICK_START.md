@@ -66,3 +66,23 @@ Or, if you use Prisma Migrate:
 ```bash
 npm run db:migrate
 ```
+
+### Email verification (new tables / columns)
+
+The schema adds `User.emailVerified` and `EmailVerificationToken` for email verification. Sync the database:
+
+```bash
+npm run db:push
+```
+
+Or run migrations:
+
+```bash
+npm run db:migrate
+```
+
+Then regenerate the Prisma client:
+
+```bash
+npm run db:generate
+```

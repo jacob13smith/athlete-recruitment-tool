@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { hashPassword } from "@/lib/utils"
+import { sendVerificationEmail } from "@/lib/email"
 import { z } from "zod"
 import { signupLimiter, getClientIp, checkRateLimit } from "@/lib/ratelimit"
+import crypto from "crypto"
 
 // Prevent static analysis during build
 export const dynamic = 'force-dynamic'
@@ -67,13 +69,29 @@ export async function POST(request: NextRequest) {
     // Hash password
     const hashedPassword = await hashPassword(password)
 
-    // Create user
+    // Create user (emailVerified defaults to false)
     const user = await db.user.create({
       data: {
         email,
         password: hashedPassword,
       },
     })
+
+    // Create verification token and send email (don't fail signup on email error)
+    const token = crypto.randomBytes(32).toString("hex")
+    const expiresAt = new Date()
+    expiresAt.setHours(expiresAt.getHours() + 24)
+    try {
+      await db.emailVerificationToken.create({
+        data: { userId: user.id, token, expiresAt },
+      })
+      const sent = await sendVerificationEmail(email, token)
+      if (!sent.success) {
+        console.error("Verification email not sent:", sent.error)
+      }
+    } catch (e) {
+      console.error("Failed to create verification token or send email:", e)
+    }
 
     return NextResponse.json(
       {

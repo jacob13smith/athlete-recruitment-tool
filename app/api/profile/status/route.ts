@@ -45,6 +45,8 @@ export async function GET() {
       return NextResponse.json({
         hasUnpublishedChanges: false,
         isPublished: user.isPublished,
+        emailVerified: user.emailVerified,
+        slug: user.slug,
       })
     }
 
@@ -52,6 +54,8 @@ export async function GET() {
       return NextResponse.json({
         hasUnpublishedChanges: false,
         isPublished: user.isPublished,
+        emailVerified: user.emailVerified,
+        slug: user.slug,
       })
     }
 
@@ -118,6 +122,7 @@ export async function GET() {
     return NextResponse.json({
       hasUnpublishedChanges,
       isPublished: user.isPublished,
+      emailVerified: user.emailVerified,
       slug: user.slug,
     })
   } catch (error) {

@@ -40,6 +40,13 @@ export async function POST() {
       return NextResponse.json({ error: "User not found" }, { status: 404 })
     }
 
+    if (!user.emailVerified) {
+      return NextResponse.json(
+        { error: "Verify your email to publish your profile." },
+        { status: 403 }
+      )
+    }
+
     if (!user.draftProfile) {
       return NextResponse.json(
         { error: "No draft profile found. Please create a profile first." },

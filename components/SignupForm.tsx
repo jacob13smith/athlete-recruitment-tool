@@ -1,21 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 
 interface SignupFormProps {
   onToggle: () => void
 }
 
 export default function SignupForm({ onToggle }: SignupFormProps) {
-  const router = useRouter()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   })
   const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [passwordStrength, setPasswordStrength] = useState("")
 
@@ -45,7 +43,7 @@ export default function SignupForm({ onToggle }: SignupFormProps) {
       [e.target.name]: value,
     })
     setError("")
-    setSuccess("")
+    setShowSuccessModal(false)
     
     // Update password strength feedback
     if (e.target.name === "password") {
@@ -61,7 +59,7 @@ export default function SignupForm({ onToggle }: SignupFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
-    setSuccess("")
+    setShowSuccessModal(false)
     setLoading(true)
 
     try {
@@ -99,13 +97,9 @@ export default function SignupForm({ onToggle }: SignupFormProps) {
         return
       }
 
-      // Show success message and switch to login
-      setSuccess("Account created successfully! Please sign in.")
-      setTimeout(() => {
-        onToggle()
-        setFormData({ email: "", password: "", confirmPassword: "" })
-        setPasswordStrength("")
-      }, 1500)
+      setShowSuccessModal(true)
+      setFormData({ email: "", password: "", confirmPassword: "" })
+      setPasswordStrength("")
     } catch (err) {
       setError("An error occurred. Please try again.")
     } finally {
@@ -113,100 +107,135 @@ export default function SignupForm({ onToggle }: SignupFormProps) {
     }
   }
 
+  const handleBackToSignIn = () => {
+    setShowSuccessModal(false)
+    onToggle()
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {success && (
-        <div className="rounded-md bg-green-50 p-4">
-          <p className="text-sm text-green-800">{success}</p>
-        </div>
-      )}
-      {error && (
-        <div className="rounded-md bg-red-50 p-4">
-          <p className="text-sm text-red-800">{error}</p>
-        </div>
-      )}
-
-      <div className="space-y-4">
-        <div>
-          <label htmlFor="signup-email" className="block text-sm font-medium text-gray-700">
-            Email address
-          </label>
-          <input
-            id="signup-email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border"
-            placeholder="you@example.com"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="signup-password" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-          <input
-            id="signup-password"
-            name="password"
-            type="password"
-            autoComplete="new-password"
-            required
-            value={formData.password}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border"
-            placeholder="Create a password"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="signup-confirm-password" className="block text-sm font-medium text-gray-700">
-            Confirm Password
-          </label>
-          <input
-            id="signup-confirm-password"
-            name="confirmPassword"
-            type="password"
-            autoComplete="new-password"
-            required
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border"
-            placeholder="Confirm your password"
-          />
-        </div>
-      </div>
-
-      {passwordStrength && (
-        <div className="rounded-md bg-yellow-50 p-3">
-          <p className="text-xs text-yellow-800">
-            <strong>Password requirements:</strong> {passwordStrength}
-          </p>
-        </div>
-      )}
-
-      <div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+    <>
+      {showSuccessModal && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="signup-success-title"
         >
-          {loading ? "Creating account..." : "Sign up"}
-        </button>
-      </div>
+          <div
+            className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl"
+            style={{ boxShadow: "0 0 0 1px rgba(0,0,0,0.05), 0 20px 50px -12px rgba(0,0,0,0.25)" }}
+          >
+            <h2
+              id="signup-success-title"
+              className="text-xl font-bold text-gray-900 sm:text-2xl"
+            >
+              Account created
+            </h2>
+            <p className="mt-4 text-gray-600">
+              We sent a verification link to your email—check your inbox (and spam). You can sign in
+              now; verify your email before publishing your profile.
+            </p>
+            <div className="mt-6 flex justify-end">
+              <button
+                type="button"
+                onClick={handleBackToSignIn}
+                className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
+              >
+                Back to sign in
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {error && (
+          <div className="rounded-md bg-red-50 p-4">
+            <p className="text-sm text-red-800">{error}</p>
+          </div>
+        )}
 
-      <div className="text-center text-sm">
-        <span className="text-gray-600">Already have an account? </span>
-        <button
-          type="button"
-          onClick={onToggle}
-          className="font-medium text-blue-600 hover:text-blue-500"
-        >
-          Sign in
-        </button>
-      </div>
-    </form>
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="signup-email" className="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <input
+              id="signup-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="signup-password" className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <input
+              id="signup-password"
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border"
+              placeholder="Create a password"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="signup-confirm-password" className="block text-sm font-medium text-gray-700">
+              Confirm Password
+            </label>
+            <input
+              id="signup-confirm-password"
+              name="confirmPassword"
+              type="password"
+              autoComplete="new-password"
+              required
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border"
+              placeholder="Confirm your password"
+            />
+          </div>
+        </div>
+
+        {passwordStrength && (
+          <div className="rounded-md bg-yellow-50 p-3">
+            <p className="text-xs text-yellow-800">
+              <strong>Password requirements:</strong> {passwordStrength}
+            </p>
+          </div>
+        )}
+
+        <div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Creating account..." : "Sign up"}
+          </button>
+        </div>
+
+        <div className="text-center text-sm">
+          <span className="text-gray-600">Already have an account? </span>
+          <button
+            type="button"
+            onClick={onToggle}
+            className="font-medium text-blue-600 hover:text-blue-500"
+          >
+            Sign in
+          </button>
+        </div>
+      </form>
+    </>
   )
 }

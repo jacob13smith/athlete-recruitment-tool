@@ -8,6 +8,7 @@ import LoadingSpinner from "./LoadingSpinner"
 interface PublishStatus {
   hasUnpublishedChanges: boolean
   isPublished: boolean
+  emailVerified: boolean
   slug: string | null
 }
 
@@ -25,6 +26,7 @@ const PublishControls = forwardRef<PublishControlsRef, PublishControlsProps>(
   const [isLoading, setIsLoading] = useState(true)
   const [isPublishing, setIsPublishing] = useState(false)
   const [isUnpublishing, setIsUnpublishing] = useState(false)
+  const [isResending, setIsResending] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
@@ -84,6 +86,24 @@ const PublishControls = forwardRef<PublishControlsRef, PublishControlsProps>(
     }
   }
 
+  const handleResendVerification = async () => {
+    setIsResending(true)
+    try {
+      const response = await fetch("/api/auth/resend-verification", { method: "POST" })
+      const data = await response.json()
+      if (response.ok) {
+        toast.success(data.message || "Verification email sent. Check your inbox.")
+      } else {
+        toast.error(data.error || "Failed to send verification email.")
+      }
+    } catch (err) {
+      console.error("Resend verification error:", err)
+      toast.error("Failed to send verification email.")
+    } finally {
+      setIsResending(false)
+    }
+  }
+
   const handleUnpublish = async () => {
     if (!confirm("Are you sure you want to unpublish your profile? It will no longer be publicly accessible.")) {
       return
@@ -132,12 +152,27 @@ const PublishControls = forwardRef<PublishControlsRef, PublishControlsProps>(
     ? "Publish Changes"
     : "Publish"
 
-  // Button enabled: only if there are saved changes in the draft profile (hasUnpublishedChanges)
-  // OR if not published yet (first time publishing)
-  const isPublishEnabled = status.hasUnpublishedChanges || !status.isPublished
+  // Publish enabled only when email verified AND (has changes OR first-time publish)
+  const isPublishEnabled =
+    status.emailVerified && (status.hasUnpublishedChanges || !status.isPublished)
 
   return (
     <div className="space-y-4">
+      {!status.emailVerified && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
+          <p className="text-sm font-medium text-amber-800">
+            Verify your email to publish your profile.
+          </p>
+          <button
+            type="button"
+            onClick={handleResendVerification}
+            disabled={isResending}
+            className="mt-2 text-sm font-medium text-amber-700 underline hover:text-amber-900 disabled:opacity-50"
+          >
+            {isResending ? "Sending…" : "Resend verification email"}
+          </button>
+        </div>
+      )}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="min-w-0 flex-shrink">
           <p className="text-sm font-medium text-gray-700">

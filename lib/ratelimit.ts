@@ -34,6 +34,14 @@ export const forgotPasswordLimiter = redis
     })
   : null
 
+export const resendVerificationLimiter = redis
+  ? new Ratelimit({
+      redis,
+      limiter: Ratelimit.fixedWindow(3, "15 m"), // 3 requests per 15 minutes per user
+      analytics: true,
+    })
+  : null
+
 /**
  * Get client IP from request headers
  * Works with Vercel and other proxies
